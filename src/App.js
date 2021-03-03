@@ -15,19 +15,6 @@ function App() {
   const [authToken, setAuthToken] = useState(null)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [response, setResponse] = useState("");
-  
-  useEffect(() => {
-    const socket = socketIOClient(ENDPOINT, {
-      withCredentials: '',
-      extraHeaders: {
-        "my-custom-header": "abcd"
-      }
-    })
-
-    socket.on("FromAPI", data => {
-      setResponse(data);
-    })
-  }, [])
 
   useEffect(() => {
     let token
@@ -35,6 +22,16 @@ function App() {
       setIsAuthenticated(false);
     } else {
       token = jwt_decode(localStorage.getItem('jwtToken'))
+
+      const socket = socketIOClient(ENDPOINT, {
+        withCredentials: '',
+        extraHeaders: {
+          userId: token.id,
+          username: token.username
+        }
+      })
+
+      console.log(token)
 
       setAuthToken(localStorage.jwtToken);
       setCurrentUser(token);
