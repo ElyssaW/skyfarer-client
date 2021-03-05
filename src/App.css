@@ -1,3 +1,13 @@
-label {
-  display: inline-block
+.nav-link {
+  display: inline;
+}
+
+.new-character-stat-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.new-character-stat-column {
+  text-align: center;
 }

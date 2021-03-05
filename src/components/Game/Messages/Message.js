@@ -1,12 +1,12 @@
 import React from 'react'
 
-const MessageBox = () => {
+const Message = (props) => {
 
     return (
         <div>
-            Message box
+            Message
         </div>
     )
 }
 
-export default MessageBox
+export default Message

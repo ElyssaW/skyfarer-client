@@ -1,10 +1,16 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import MessageWindow from './Messages/MessageWindow'
 
-const Game = () => {
+const REACT_APP_SERVER_URL = process.env.REACT_APP_SERVER_URL
+
+const Game = (props) => {
 
     return (
-        <div>
+        <div className='container'>
             Game page
+            < MessageWindow currentUser={props.currentUser} />
+            {/* < Link to='/game/:id/history' >Message Backlog</Link> */}
         </div>
     )
 }

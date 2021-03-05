@@ -20,13 +20,13 @@ import WriteCharacter from './components/Character/WriteCharacter'
 
 // Game components
 import Game from './components/Game/Game'
+import Games from './components/Games/Games'
 import NewGame from './components/Game/NewGame'
 
 // Misc components
 import NPC from './components/GM/NPC'
 import Ship from './components/GM/Ship'
 
-const ENDPOINT = "http://127.0.0.1:8000";
 const REACT_APP_SERVER_URL = process.env.REACT_APP_SERVER_URL
 
 function App() {
@@ -42,16 +42,6 @@ function App() {
       setIsAuthenticated(false);
     } else {
       token = jwt_decode(localStorage.getItem('jwtToken'))
-
-      const socket = socketIOClient(ENDPOINT, {
-        withCredentials: '',
-        extraHeaders: {
-          userId: token.id,
-          username: token.username
-        }
-      })
-
-      console.log(token)
 
       setAuthToken(localStorage.jwtToken);
       setCurrentUser(token);
@@ -81,15 +71,27 @@ function App() {
 
         <Route exact path="/auth/signup" component={ Signup } />
         <Route exact path="/auth/login" component={ Login } />
-        <Route exact path="/auth/user/:id" component={ Profile } />
+        <Route exact path="/auth/user/:id" render={(props) => {
+          return < Profile search={props.match.params.id} /> 
+         }} />
 
-        <Route exact path="/character/view/:id" component={ Character } />
+        <Route exact path="/character/view/:id" render={(props) => {
+          return < Character characterId={'603da6d11a318371b02f75f3'} /> 
+         }} />
         <Route exact path="/character/new" component={ WriteCharacter } />
 
-        <Route exact path="/game/all" component={ Game } />
-        <Route exact path="/game/search" component={ Game } />
-        <Route exact path="/game/:id" component={ Game } />
-        <Route exact path="/game/new" component={ Game } />
+        <Route exact path="/games/all" component={ Games } />
+        <Route exact path="/games/all/:search" render={(props) => {
+          return < Games search={props.match.params.search} /> 
+         }} />
+
+        <Route exact path="/game/new" component={ NewGame } />
+        <Route path="/game/:id" render={(props) => {
+          return < Game currentUser={currentUser} /> 
+         }} />
+        <Route path="/game/:id/history" render={(props) => {
+          return < Game search={props.match.params.id} /> 
+         }} />
 
         <Route exact path="/gm/npc/:id" component={ NPC } />
         <Route exact path="/gm/ship/:id" component={ Ship } />

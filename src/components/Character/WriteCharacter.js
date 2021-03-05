@@ -31,36 +31,36 @@ const WriteCharacter = () => {
             </Form.Group>
 
             <Form.Group>
-                < Form.Row >
-                    < Form.Label for='irons' >Irons</Form.Label>
-                    < Form.Check inline label='-1' type='radio' name='irons' />
-                    < Form.Check inline label='0' type='radio' name='irons' />
-                    < Form.Check inline label='1' type='radio' name='irons' />
-                    < Form.Check inline label='2' type='radio' name='irons' />
+                < Form.Row className='new-character-stat-row' >
+                    < Form.Label className='col-1' for='irons' >Irons</Form.Label>
+                    < Form.Check className='new-character-stat-column stat-col-1' inline label='-1' type='radio' name='irons' />
+                    < Form.Check className='new-character-stat-column stat-col-2' inline label='0' type='radio' name='irons' />
+                    < Form.Check className='new-character-stat-column stat-col-3' inline label='1' type='radio' name='irons' />
+                    < Form.Check className='new-character-stat-column stat-col-4' inline label='2' type='radio' name='irons' />
                 </Form.Row>
 
-                < Form.Row >
-                    < Form.Label for='hearts' >Hearts</Form.Label>
-                    < Form.Check inline label='-1' type='radio' name='hearts' />
-                    < Form.Check inline label='0' type='radio' name='hearts' />
-                    < Form.Check inline label='1' type='radio' name='hearts' />
-                    < Form.Check inline label='2' type='radio' name='hearts' />
+                < Form.Row className='new-character-stat-row' >
+                    < Form.Label className='col-1' for='hearts' >Hearts</Form.Label>
+                    < Form.Check className='new-character-stat-column stat-col-1' inline label='-1' type='radio' name='hearts' />
+                    < Form.Check className='new-character-stat-column stat-col-2' inline label='0' type='radio' name='hearts' />
+                    < Form.Check className='new-character-stat-column stat-col-3' inline label='1' type='radio' name='hearts' />
+                    < Form.Check className='new-character-stat-column stat-col-4' inline label='2' type='radio' name='hearts' />
                 </Form.Row>
 
-                < Form.Row >
-                    < Form.Label for='veils' >Veils</Form.Label>
-                    < Form.Check inline label='-1' type='radio' name='veils' />
-                    < Form.Check inline label='0' type='radio' name='veils' />
-                    < Form.Check inline label='1' type='radio' name='veils' />
-                    < Form.Check inline label='2' type='radio' name='veils' />
+                < Form.Row className='new-character-stat-row' >
+                    < Form.Label className='col-1' for='veils' >Veils</Form.Label>
+                    < Form.Check className='new-character-stat-column stat-col-1' inline label='-1' type='radio' name='veils' />
+                    < Form.Check className='new-character-stat-column stat-col-2' inline label='0' type='radio' name='veils' />
+                    < Form.Check className='new-character-stat-column stat-col-3' inline label='1' type='radio' name='veils' />
+                    < Form.Check className='new-character-stat-column stat-col-4' inline label='2' type='radio' name='veils' />
                 </Form.Row>
 
-                < Form.Row >
-                    < Form.Label for='mirrors' >Mirrors</Form.Label>
-                    < Form.Check inline label='-1' type='radio' name='mirrors' />
-                    < Form.Check inline label='0' type='radio' name='mirrors' />
-                    < Form.Check inline label='1' type='radio' name='mirrors' />
-                    < Form.Check inline label='2' type='radio' name='mirrors' />
+                < Form.Row className='new-character-stat-row' >
+                    < Form.Label className='col-1' for='mirrors' >Mirrors</Form.Label>
+                    < Form.Check className='new-character-stat-column stat-col-1' inline label='-1' type='radio' name='mirrors' />
+                    < Form.Check className='new-character-stat-column stat-col-2' inline label='0' type='radio' name='mirrors' />
+                    < Form.Check className='new-character-stat-column stat-col-3' inline label='1' type='radio' name='mirrors' />
+                    < Form.Check className='new-character-stat-column stat-col-4' inline label='2' type='radio' name='mirrors' />
                 </Form.Row>
             </Form.Group>
 
