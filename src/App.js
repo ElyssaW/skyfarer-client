@@ -28,13 +28,14 @@ import NPC from './components/GM/NPC'
 import Ship from './components/GM/Ship'
 
 const REACT_APP_SERVER_URL = process.env.REACT_APP_SERVER_URL
+const axios = require('axios')
 
 function App() {
 
   const [currentUser, setCurrentUser] = useState(null)
   const [authToken, setAuthToken] = useState(null)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [response, setResponse] = useState("");
+  const [gamesData, setGamesData] = useState(null)
 
   console.log('Current user is...')
   console.log(currentUser)
@@ -50,6 +51,11 @@ function App() {
       setCurrentUser(token);
       setIsAuthenticated(true);
     }
+
+    axios(`${REACT_APP_SERVER_URL}game/all`)
+    .then(res => {
+      setGamesData(res.data)
+    })
   }, []);
 
   const nowCurrentUser = (userData) => {
@@ -87,9 +93,11 @@ function App() {
          }} />
         <Route exact path="/character/new" component={ WriteCharacter } />
 
-        <Route exact path="/games/all" component={ Games } />
+        <Route exact path="/games/all" render={(props) => {
+          return < Games gamesData={gamesData} /> 
+         }} />
         <Route exact path="/games/all/:search" render={(props) => {
-          return < Games search={props.match.params.search} /> 
+          return < Games gamesData={gamesData} search={props.match.params.search} /> 
          }} />
 
         <Route exact path="/game/new" render={() => {

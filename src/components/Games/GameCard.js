@@ -1,10 +1,10 @@
 import React from 'react'
 
-const GameCard = () => {
+const GameCard = (props) => {
 
     return (
         <div className='container'>
-            Game
+            {props.game.title}
         </div>
     )
 }

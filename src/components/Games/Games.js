@@ -1,12 +1,16 @@
 import React from 'react'
 import GameCard from './GameCard'
 
-const Games = () => {
+const Games = (props) => {
+
+    let games = props.gamesData.map((game, i) => {
+        return < GameCard game={game} key={`game-${i}`} />
+    })
 
     return (
         <div className='container'>
             Find a game
-            < GameCard />
+            {games}
         </div>
     )
 }

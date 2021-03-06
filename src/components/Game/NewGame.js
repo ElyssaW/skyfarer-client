@@ -20,6 +20,7 @@ const NewGame = (props) => {
         axios.post(`${REACT_APP_SERVER_URL}game/new`, newGame)
         .then(res => {
             console.log(res)
+            window.location = `/game/${res.data._id}`
         })
     }
 
