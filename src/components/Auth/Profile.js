@@ -6,20 +6,21 @@ const Profile = (props) => {
     const userData = props.user ? (
         <div>
             <h1>Profile</h1>
-            <p>Name: {props.user.name}</p>
+            <p>Name: {props.currentUser.name}</p>
 
             <p>Characters</p>
-            {props.user.characters.map(character => {
-                <p>{character.name}</p>
+            {props.currentUser.characters.map(character => {
+                return <p>Hi{character.name}</p>
             })}
+            {props.currentUser.characters}
 
             <Link to='/character/new'><button>Make new character</button></Link>
 
             <p>Games</p>
-            {props.user.games.map(game => {
+            {props.currentUser.games.map(game => {
                 <p>{game.title}</p>
             })}
-            
+
             <Link to='/game/new'><button>Make new game</button></Link>
         </div>
     ) : (

@@ -46,7 +46,6 @@ function App() {
       setIsAuthenticated(false);
     } else {
       token = jwt_decode(localStorage.getItem('jwtToken'))
-
       setAuthToken(localStorage.jwtToken);
       setCurrentUser(token);
       setIsAuthenticated(true);
@@ -62,7 +61,17 @@ function App() {
     console.log('nowCurrentUser is working...');
     setCurrentUser(userData);
     setIsAuthenticated(true);
-  };
+  }
+
+  const addCharacterToCurrentUser = (newChar) => {
+    let tempUser = currentUser
+    tempUser.characters.push(newChar)
+    const { token } = tempUser;
+    localStorage.setItem('jwtToken', token);
+    setAuthToken(token);
+    const decoded = jwt_decode(token)
+    nowCurrentUser(decoded)
+  }
 
   const handleLogout = () => {
     if (localStorage.getItem('jwtToken')) {
@@ -94,7 +103,9 @@ function App() {
         <Route exact path="/character/view/:id" render={(props) => {
           return < Character characterId={'603da6d11a318371b02f75f3'} /> 
          }} />
-        <Route exact path="/character/new" component={ WriteCharacter } />
+        <Route exact path="/character/new" render={() => {
+          return < WriteCharacter currentUser={currentUser} addCharacterToCurrentUser={addCharacterToCurrentUser} />
+        }} />
 
         <Route exact path="/games/all" render={(props) => {
           return < Games gamesData={gamesData} /> 
