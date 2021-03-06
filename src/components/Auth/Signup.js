@@ -25,7 +25,7 @@ const Signup= (props) => {
           localStorage.setItem('jwtToken', token);
           setAuthToken(token);
           const decoded = jwt_decode(token)
-          props.setCurrentUser(decoded)
+          props.nowCurrentUser(decoded)
         })
         .catch(error => {
             console.log(`Login error`, error)

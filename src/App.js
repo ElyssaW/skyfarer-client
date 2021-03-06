@@ -36,6 +36,9 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [response, setResponse] = useState("");
 
+  console.log('Current user is...')
+  console.log(currentUser)
+
   useEffect(() => {
     let token
     if (!localStorage.getItem('jwtToken')) {
@@ -69,8 +72,12 @@ function App() {
       <Switch>
         <Route exact path="/" component={ Home } />
 
-        <Route exact path="/auth/signup" component={ Signup } />
-        <Route exact path="/auth/login" component={ Login } />
+        <Route exact path="/auth/signup" render={(props) => {
+          return < Signup nowCurrentUser={nowCurrentUser} /> 
+         }} />
+        <Route exact path="/auth/login" render={(props) => {
+          return < Login nowCurrentUser={nowCurrentUser} /> 
+         }} />
         <Route exact path="/auth/user/:id" render={(props) => {
           return < Profile search={props.match.params.id} /> 
          }} />
@@ -85,7 +92,8 @@ function App() {
           return < Games search={props.match.params.search} /> 
          }} />
 
-        <Route exact path="/game/new" component={ NewGame } />
+        <Route exact path="/game/new" render={() => {
+          return < NewGame currentUser={currentUser} /> }} />
         <Route path="/game/:id" render={(props) => {
           return < Game currentUser={currentUser} /> 
          }} />

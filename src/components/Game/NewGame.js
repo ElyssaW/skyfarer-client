@@ -1,24 +1,44 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Form, Col } from 'react-bootstrap'
+import { propTypes } from 'react-bootstrap/esm/Image'
+const axios = require('axios')
+const REACT_APP_SERVER_URL = process.env.REACT_APP_SERVER_URL
 
-const NewGame = () => {
+const NewGame = (props) => {
+
+    const [title, setGameTitle] = useState('')
+    const [desc, setDesc] = useState('')
+    const [tags, setTags] = useState('')
+    const [users, setUsers] = useState('')
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        console.log('Submitting')
+        let newGame = {title, desc, tags, users, currentUser: props.currentUser}
+
+        console.log(newGame)
+        axios.post(`${REACT_APP_SERVER_URL}game/new`, newGame)
+        .then(res => {
+            console.log(res)
+        })
+    }
 
     return (
         <div className='container'>
             < Form >
                 < Form.Label >Game Title</Form.Label>
-                < Form.Control ></Form.Control>
+                < Form.Control onChange={(e) => {setGameTitle(e.target.value)}} ></Form.Control>
 
                 < Form.Label >Description</Form.Label>
-                < Form.Control ></Form.Control>
+                < Form.Control onChange={(e) => {setDesc(e.target.value)}} ></Form.Control>
 
                 < Form.Label >Add tags</Form.Label>
-                < Form.Control ></Form.Control>
+                < Form.Control onChange={(e) => {setTags(e.target.value)}} ></Form.Control>
                 
-                < Form.Label >Add users</Form.Label>
-                < Form.Control ></Form.Control>
+                < Form.Label >Add users (Enter by email)</Form.Label>
+                < Form.Control onChange={(e) => {setUsers(e.target.value)}} ></Form.Control>
 
-                < input type='submit' />
+                < input type='submit' onClick={(e) => handleSubmit(e)} />
             </Form>
         </div>
     )
