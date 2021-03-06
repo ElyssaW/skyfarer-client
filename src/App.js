@@ -44,33 +44,30 @@ function App() {
     let token
     if (!localStorage.getItem('jwtToken')) {
       setIsAuthenticated(false);
+      axios(`${REACT_APP_SERVER_URL}game/all`)
+      .then(res => {
+        setGamesData(res.data)
+      })
     } else {
+      console.log(localStorage.getItem('jwtToken'))
       token = jwt_decode(localStorage.getItem('jwtToken'))
       setAuthToken(localStorage.jwtToken);
-      setCurrentUser(token);
       setIsAuthenticated(true);
-    }
 
-    axios(`${REACT_APP_SERVER_URL}game/all`)
-    .then(res => {
-      setGamesData(res.data)
-    })
+      axios(`${REACT_APP_SERVER_URL}auth/data/${token.id}`).then(res => {
+        setGamesData(res.data.gamesData)
+        setCurrentUser(res.data.currentUser)
+      })
+      .catch(err => {
+        handleLogout()
+      })
+    }
   }, []);
 
   const nowCurrentUser = (userData) => {
     console.log('nowCurrentUser is working...');
     setCurrentUser(userData);
     setIsAuthenticated(true);
-  }
-
-  const addCharacterToCurrentUser = (newChar) => {
-    let tempUser = currentUser
-    tempUser.characters.push(newChar)
-    const { token } = tempUser;
-    localStorage.setItem('jwtToken', token);
-    setAuthToken(token);
-    const decoded = jwt_decode(token)
-    nowCurrentUser(decoded)
   }
 
   const handleLogout = () => {
@@ -104,7 +101,7 @@ function App() {
           return < Character characterId={'603da6d11a318371b02f75f3'} /> 
          }} />
         <Route exact path="/character/new" render={() => {
-          return < WriteCharacter currentUser={currentUser} addCharacterToCurrentUser={addCharacterToCurrentUser} />
+          return < WriteCharacter currentUser={currentUser} nowCurrentUser={nowCurrentUser} />
         }} />
 
         <Route exact path="/games/all" render={(props) => {

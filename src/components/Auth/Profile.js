@@ -10,9 +10,8 @@ const Profile = (props) => {
 
             <p>Characters</p>
             {props.currentUser.characters.map(character => {
-                return <p>Hi{character.name}</p>
+                return <p>{character.name}</p>
             })}
-            {props.currentUser.characters}
 
             <Link to='/character/new'><button>Make new character</button></Link>
 

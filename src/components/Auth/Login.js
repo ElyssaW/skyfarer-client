@@ -38,7 +38,7 @@ const Login = (props) => {
         });
     }
 
-    if (props.currentUser) return <Redirect to="/profile" currentUser={props.currentUser} />
+    if (props.currentUser) return <Redirect to="/auth/myprofile" currentUser={props.currentUser} />
 
     let errorMsg = error ? <p>Error logging in</p> : null
 
