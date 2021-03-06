@@ -1,5 +1,7 @@
 import React, { useState, useEffect} from 'react'
-
+import jwt_decode from 'jwt-decode';
+import setAuthToken from '../../utils/setAuthToken';
+import { Redirect } from 'react-router-dom';
 const axios = require('axios')
 
 const REACT_APP_SERVER_URL = process.env.REACT_APP_SERVER_URL
@@ -8,6 +10,7 @@ const Login = (props) => {
 
     const [email, setEmail] = useState(null)
     const [password, setPassword] = useState(null)
+    const [error, setError] = useState(false)
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -18,26 +21,42 @@ const Login = (props) => {
         axios.post(`${REACT_APP_SERVER_URL}auth/login`, userData)
         .then(response => {
             console.log(response)
+            const { token } = response.data;
+            // Save token to localStorage
+            localStorage.setItem('jwtToken', token);
+            // Set token to auth header
+            setAuthToken(token);
+            // Decode token to get the user data
+            const decoded = jwt_decode(token);
+            console.log(decoded)
+            // Set current user
+            props.nowCurrentUser(decoded);
         })
         .catch(error => {
             console.log(`Login error`, error)
+            setError(true)
         });
     }
 
-  return (
-    <div>
-        <h1>Login</h1>
-        <form>
-            <label>Email</label>
-            <input type='text' onChange={(e)=>{setEmail(e.target.value)}} />
+    if (props.currentUser) return <Redirect to="/profile" currentUser={props.currentUser} />
 
-            <label>Password</label>
-            <input type='password' onChange={(e)=>{setPassword(e.target.value)}} />
+    let errorMsg = error ? <p>Error logging in</p> : null
 
-            <input type='submit' onClick={(e)=>{handleSubmit(e)}} />
-        </form>
-    </div>
-  )
+    return (
+        <div>
+            <h1>Login</h1>
+            {errorMsg}
+            <form>
+                <label>Email</label>
+                <input type='text' onChange={(e)=>{setEmail(e.target.value)}} />
+
+                <label>Password</label>
+                <input type='password' onChange={(e)=>{setPassword(e.target.value)}} />
+
+                <input type='submit' onClick={(e)=>{handleSubmit(e)}} />
+            </form>
+        </div>
+    )
 }
 
 export default Login;

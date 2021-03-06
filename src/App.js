@@ -74,15 +74,18 @@ function App() {
 
   return (
     <div>
-      < Navbar />
+      < Navbar currentUser={currentUser} handleLogout={handleLogout} />
       <Switch>
         <Route exact path="/" component={ Home } />
 
         <Route exact path="/auth/signup" render={(props) => {
-          return < Signup nowCurrentUser={nowCurrentUser} /> 
+          return < Signup nowCurrentUser={nowCurrentUser} currentUser={currentUser} /> 
          }} />
         <Route exact path="/auth/login" render={(props) => {
-          return < Login nowCurrentUser={nowCurrentUser} /> 
+          return < Login nowCurrentUser={nowCurrentUser} currentUser={currentUser} /> 
+         }} />
+        <Route exact path="/auth/myprofile" render={(props) => {
+          return < Profile currentUser={currentUser} user={currentUser} /> 
          }} />
         <Route exact path="/auth/user/:id" render={(props) => {
           return < Profile search={props.match.params.id} /> 
