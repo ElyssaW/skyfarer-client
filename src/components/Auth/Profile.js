@@ -17,7 +17,7 @@ const Profile = (props) => {
 
             <p>Games</p>
             {props.currentUser.games ? props.currentUser.games.map(game => {
-                <p>{game.title}</p>
+                return <p>{game.title}< Link to={`/game/${game._id}`} ><button>Go to Game</button></Link></p>
             }) : null }
 
             <Link to='/game/new'><button>Make new game</button></Link>

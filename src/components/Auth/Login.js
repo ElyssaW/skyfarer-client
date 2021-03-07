@@ -1,5 +1,6 @@
 import React, { useState, useEffect} from 'react'
 import jwt_decode from 'jwt-decode';
+import { Form, Col } from 'react-bootstrap'
 import setAuthToken from '../../utils/setAuthToken';
 import { Redirect } from 'react-router-dom';
 const axios = require('axios')
@@ -46,15 +47,15 @@ const Login = (props) => {
         <div>
             <h1>Login</h1>
             {errorMsg}
-            <form>
+            < Form >
                 <label>Email</label>
-                <input type='text' onChange={(e)=>{setEmail(e.target.value)}} />
+                < Form.Control type='email' onChange={(e)=>{setEmail(e.target.value)}} />
 
                 <label>Password</label>
-                <input type='password' onChange={(e)=>{setPassword(e.target.value)}} />
+                < Form.Control type='password' onChange={(e)=>{setPassword(e.target.value)}} />
 
-                <input type='submit' onClick={(e)=>{handleSubmit(e)}} />
-            </form>
+                < input type='submit' onClick={(e)=>{handleSubmit(e)}} />
+            </ Form >
         </div>
     )
 }

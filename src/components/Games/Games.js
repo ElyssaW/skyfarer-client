@@ -8,7 +8,7 @@ const Games = (props) => {
     })
 
     return (
-        <div className='container'>
+        <div >
             Find a game
             {games}
         </div>

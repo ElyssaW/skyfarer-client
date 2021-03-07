@@ -1,5 +1,6 @@
 import React, { useState, useEffect} from 'react'
 import { Redirect } from 'react-router-dom'
+import { Form, Col } from 'react-bootstrap'
 import jwt_decode from 'jwt-decode';
 import setAuthToken from '../../utils/setAuthToken';
 const axios = require('axios')
@@ -39,21 +40,29 @@ const Signup= (props) => {
   return (
     <div>
         <h1>Sign Up</h1>
-        <form>
+        < Form >
+          < Form.Row >
             <label>Username</label>
-            <input type='text' onChange={(e)=>{setUsername(e.target.value)}} />
+            < Form.Control type='text' onChange={(e)=>{setUsername(e.target.value)}} />
+          </Form.Row >
 
+          < Form.Row >         
             <label>Email</label>
-            <input type='text' onChange={(e)=>{setEmail(e.target.value)}} />
+            < Form.Control type='text' onChange={(e)=>{setEmail(e.target.value)}} />
+          </Form.Row >
 
+          < Form.Row >
             <label>Password</label>
-            <input type='password' onChange={(e)=>{setPassword(e.target.value)}} />
+            < Form.Control type='password' onChange={(e)=>{setPassword(e.target.value)}} />
+          </Form.Row >
 
+          < Form.Row >
             <label>Confirm Password</label>
-            <input type='password' onChange={(e)=>{setConfirmPassword(e.target.value)}} />
+            < Form.Control type='password' onChange={(e)=>{setConfirmPassword(e.target.value)}} />
+          </Form.Row >
 
-            <input type='submit' onClick={(e)=>{handleSubmit(e)}} />
-        </form>
+          <input type='submit' onClick={(e)=>{handleSubmit(e)}} />
+        </ Form >
     </div>
   )
 }

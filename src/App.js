@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
+import { Container } from 'react-bootstrap'
 import jwt_decode from 'jwt-decode';
 import './App.css';
 import socketIOClient from 'socket.io-client'
@@ -53,8 +54,9 @@ function App() {
       token = jwt_decode(localStorage.getItem('jwtToken'))
       setAuthToken(localStorage.jwtToken);
       setIsAuthenticated(true);
+      setCurrentUser(token)
 
-      axios(`${REACT_APP_SERVER_URL}auth/data/${token.id}`).then(res => {
+      axios(`${REACT_APP_SERVER_URL}auth/data/${token._id}`).then(res => {
         setGamesData(res.data.gamesData)
         setCurrentUser(res.data.currentUser)
       })
@@ -76,9 +78,9 @@ function App() {
   }
 
   return (
-    <div>
+    < Container >
       < Navbar currentUser={currentUser} handleLogout={handleLogout} />
-      <Switch>
+      < Switch >
         <Route exact path="/" component={ Home } />
 
         <Route exact path="/auth/signup" render={(props) => {
@@ -121,8 +123,8 @@ function App() {
         <Route exact path="/gm/ship/:id" component={ Ship } />
 
         <Route component={ NotFound } />
-      </Switch>
-    </div>
+      </ Switch >
+    </ Container >
   )
 }
 

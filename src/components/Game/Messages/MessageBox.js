@@ -6,8 +6,10 @@ const MessageBox = (props) => {
     return (
         <div>
             < Form >
-                < textarea onChange={(e) => {props.handleChange(e)}} >{props.writeMessage}</textarea>
-                < input type='submit' onClick={(e) => {props.handleSubmit(e)}} />
+                < Form.Control type='text' onChange={(e) => {props.handleChange(e)}} value={props.writeMessage} />
+                < button onClick={(e) => {props.handleSubmit(e)}}>
+                    Send Message
+                </button>
             </Form>
         </div>
     )

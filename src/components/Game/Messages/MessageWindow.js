@@ -1,60 +1,70 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Messages from './Messages'
 import MessageBox from './MessageBox'
+import useChat from '../../../utils/useChat'
 const REACT_APP_SERVER_URL = process.env.REACT_APP_SERVER_URL
 const io = require('socket.io-client')
 
 const MessageWindow = (props) => {
 
-    const [newMessages, setNewMessages] = useState(null)
-    const [writeMessage, setWriteMessage] = useState('')
-
-    let socket
-
-    useEffect(() => {
-        
-        socket = io(REACT_APP_SERVER_URL, {
-          withCredentials: false,
-          extraHeaders: {
-            userId: props.currentUser.id,
-            username: props.currentUser.username
-          }
-        })
-
-        socket.on('message', (msg, id) => {
-            console.log('Message received')
-            console.log('msg: ' + msg)
-            console.log('id: ' + id)
-  
-            let tempMessages = newMessages
-            tempMessages.push(msg)
-            setNewMessages([...tempMessages])
-          })
-  
-    }, [])
+    const { roomId } = '69897956867867'
+    const { messages, sendMessage } = useChat(roomId, props.currentUser)
+    const [newMessage, setNewMessage] = useState('')
 
     const handleChange = (e) => {
-        setWriteMessage(e.target.value)
+        setNewMessage(e.target.value)
     }
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        if (socket) {
-            console.log('Message sent')
-            if (writeMessage) {
-              socket.emit('chat message', writeMessage)
-              setWriteMessage('')
-            }
-        } else {
-            console.log('Hmm. No socket initialized...')
-        }
+        sendMessage(newMessage)
+        setNewMessage('')
     }
+
+    // const [newMessages, setNewMessages] = useState([])
+    // const [writeMessage, setWriteMessage] = useState('')
+
+    // if (!props.currentUser) {
+    //     return <p>Loading...</p>
+    // }
+
+    // let socket = io(REACT_APP_SERVER_URL, {
+        // withCredentials: false,
+        // extraHeaders: {
+        //   userId: props.currentUser._id,
+        //   username: props.currentUser.username
+        // }
+    // })
+
+    // socket.on('message', (msg, id) => {
+    //     console.log('Message received')
+    //     console.log('msg: ' + msg)
+    //     console.log('id: ' + id)
+
+    //     let tempMessages = newMessages
+    //     tempMessages.push(msg)
+    //     setNewMessages([...tempMessages])
+    // })
+
+    // const handleChange = (e) => {
+    //     setWriteMessage(e.target.value)
+    // }
+
+    // const handleSubmit = (e) => {
+    //     e.preventDefault()
+    //     console.log('Message sent')
+    //     console.log(socket.id)
+
+    //     if (writeMessage) {
+    //         socket.emit('message', writeMessage)
+    //       }
+    // }
 
     return (
         <div>
             MessageWindow
-            < Messages messages={[]} />
-            < MessageBox writeMessage={writeMessage} handleChange={handleChange} handleSubmit={handleSubmit} />
+            < Messages messages={messages} />
+            < MessageBox writeMessage={newMessage} handleChange={handleChange} handleSubmit={handleSubmit} />
         </div>
     )
 }

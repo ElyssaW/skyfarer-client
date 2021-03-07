@@ -7,7 +7,7 @@ const REACT_APP_SERVER_URL = process.env.REACT_APP_SERVER_URL
 const Game = (props) => {
 
     return (
-        <div className='container'>
+        <div>
             Game page
             < MessageWindow currentUser={props.currentUser} />
             {/* < Link to='/game/:id/history' >Message Backlog</Link> */}

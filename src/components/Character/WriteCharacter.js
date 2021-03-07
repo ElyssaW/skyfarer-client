@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Redirect } from 'react-router-dom'
-import { Container, Form, Col } from 'react-bootstrap'
+import { Form, Col } from 'react-bootstrap'
 import jwt_decode from 'jwt-decode';
 
 const REACT_APP_SERVER_URL = process.env.REACT_APP_SERVER_URL
@@ -66,10 +66,10 @@ const WriteCharacter = (props) => {
 
     let errorMsg = error ? <p>Error creating character</p> : null
 
-    if (newChar) return <Redirect to={`/character/view/${newChar._id}`} currentUser={props.currentUser} />
+    if (newChar) return <Redirect to={`/character/view/${newChar._id}`} />
     
     return (
-        < Container >
+        < div >
             { errorMsg }
             < Form >
                 < Form.Group >
@@ -166,7 +166,7 @@ const WriteCharacter = (props) => {
 
             < input type='submit' onClick={handleSubmit} />
             </ Form >
-        </ Container >
+        </ div >
     )
 }
 

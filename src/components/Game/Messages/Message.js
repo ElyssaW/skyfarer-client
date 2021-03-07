@@ -4,7 +4,7 @@ const Message = (props) => {
 
     return (
         <div>
-            Message
+            {props.message.body}
         </div>
     )
 }

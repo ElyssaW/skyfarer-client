@@ -4,11 +4,10 @@ import { NavLink, Link } from 'react-router-dom'
 const Navbar = (props) => {
 
     return (
-        <div>
-            <NavLink className="nav-link" exact to="/"> Home | </NavLink>
-            <NavLink className="nav-link" exact to="/character/view/:id">Character | </NavLink>
+        <div className='nav-bar'>
+            <NavLink className="nav-link" exact to="/"> Home </NavLink>
             <NavLink className="nav-link" exact to="/game/:id">My Games</NavLink>
-            <NavLink className="nav-link" exact to="/game/all">All Games</NavLink>
+            <NavLink className="nav-link" exact to="/games/all">All Games</NavLink>
 
             { 
             props.currentUser ? 
@@ -17,8 +16,8 @@ const Navbar = (props) => {
                 < button onClick={props.handleLogout} >Logout</button>
             </> :
             <>
-                <NavLink className="nav-link" exact to="/auth/login"> Login | </NavLink>
-                <NavLink className="nav-link" exact to="/auth/signup">Signup | </NavLink>
+                <NavLink className="nav-link" exact to="/auth/login"> Login </NavLink>
+                <NavLink className="nav-link" exact to="/auth/signup">Signup </NavLink>
             </>
             }
         </div>

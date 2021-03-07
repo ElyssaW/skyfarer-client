@@ -25,7 +25,7 @@ const NewGame = (props) => {
     }
 
     return (
-        <div className='container'>
+        <div >
             < Form >
                 < Form.Label >Game Title</Form.Label>
                 < Form.Control onChange={(e) => {setGameTitle(e.target.value)}} ></Form.Control>
