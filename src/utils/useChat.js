@@ -1,13 +1,23 @@
 import React, { useState, useEffect, useRef } from 'react'
+import jwt_decode from 'jwt-decode';
 const io = require('socket.io-client')
 
 const REACT_APP_SERVER_URL = process.env.REACT_APP_SERVER_URL
 const newChatMessage = 'newChatMessage'
 
-const useChat = (roomId, currentUser) => {
+const useChat = (gameId, currentUser) => {
 
     console.log('Current user in useChat...')
     console.log(currentUser)
+
+    console.log('Game id')
+    console.log(gameId)
+
+    if (!currentUser) {
+        currentUser = jwt_decode(localStorage.getItem('jwtToken'))
+        console.log('Current token in useChat...')
+        console.log(currentUser)
+    }
 
     let extraHeaders
     if (currentUser) {
@@ -17,8 +27,8 @@ const useChat = (roomId, currentUser) => {
           }
     } else {
         extraHeaders = {
-            userId: '58864ohg6i',
-            username: 'Elyssa'
+            userId: 'guest',
+            username: 'guest'
           }
     }
 
@@ -28,7 +38,7 @@ const useChat = (roomId, currentUser) => {
     useEffect(() => {
         socketRef.current = io(REACT_APP_SERVER_URL, {
             withCredentials: false,
-            query: { roomId },
+            query: { gameId },
             extraHeaders: extraHeaders
         })
 
@@ -46,7 +56,7 @@ const useChat = (roomId, currentUser) => {
             socketRef.current.disconnect()
         }
 
-    }, [roomId])
+    }, [])
 
     const sendMessage = (messageBody) => {
         socketRef.current.emit(newChatMessage, {

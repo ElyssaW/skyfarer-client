@@ -57,7 +57,13 @@ function App() {
       setCurrentUser(token)
 
       axios(`${REACT_APP_SERVER_URL}auth/data/${token._id}`).then(res => {
-        setGamesData(res.data.gamesData)
+        let gamesHash = {}
+
+        res.data.gamesData.forEach(game => {
+          gamesHash[game._id] = game
+        })
+
+        setGamesData(gamesHash)
         setCurrentUser(res.data.currentUser)
       })
     }
@@ -113,7 +119,7 @@ function App() {
         <Route exact path="/game/new" render={() => {
           return < NewGame currentUser={currentUser} /> }} />
         <Route path="/game/:id" render={(props) => {
-          return < Game currentUser={currentUser} /> 
+          return < Game currentUser={currentUser} gameId={props.match.params.id} game={gamesData[props.match.params.id]} /> 
          }} />
         <Route path="/game/:id/history" render={(props) => {
           return < Game search={props.match.params.id} /> 

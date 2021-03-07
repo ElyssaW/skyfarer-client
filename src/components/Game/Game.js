@@ -9,7 +9,7 @@ const Game = (props) => {
     return (
         <div>
             Game page
-            < MessageWindow currentUser={props.currentUser} />
+            < MessageWindow currentUser={props.currentUser} gameId={props.gameId} />
             {/* < Link to='/game/:id/history' >Message Backlog</Link> */}
         </div>
     )

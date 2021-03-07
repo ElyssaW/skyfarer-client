@@ -3,9 +3,13 @@ import GameCard from './GameCard'
 
 const Games = (props) => {
 
-    let games = props.gamesData.map((game, i) => {
-        return < GameCard game={game} key={`game-${i}`} />
-    })
+    let games = []
+
+    for (const game in props.gamesData) {
+        games.push(
+            < GameCard game={props.gamesData[game]} key={`game-${game}`} />
+        )
+    }
 
     return (
         <div >
