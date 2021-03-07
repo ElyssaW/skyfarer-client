@@ -1,4 +1,5 @@
 import React, { useState, useEffect} from 'react'
+import { Redirect } from 'react-router-dom'
 import jwt_decode from 'jwt-decode';
 import setAuthToken from '../../utils/setAuthToken';
 const axios = require('axios')
@@ -33,6 +34,7 @@ const Signup= (props) => {
       }
     }
 
+  if (props.currentUser) return <Redirect to="/auth/myprofile" currentUser={props.currentUser} />
 
   return (
     <div>

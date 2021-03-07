@@ -58,9 +58,6 @@ function App() {
         setGamesData(res.data.gamesData)
         setCurrentUser(res.data.currentUser)
       })
-      .catch(err => {
-        handleLogout()
-      })
     }
   }, []);
 
@@ -97,8 +94,8 @@ function App() {
           return < Profile search={props.match.params.id} /> 
          }} />
 
-        <Route exact path="/character/view/:id" render={(props) => {
-          return < Character characterId={'603da6d11a318371b02f75f3'} /> 
+        <Route path="/character/view/:id" render={(props) => {
+          return < Character characterId={props.match.params.id} /> 
          }} />
         <Route exact path="/character/new" render={() => {
           return < WriteCharacter currentUser={currentUser} nowCurrentUser={nowCurrentUser} />

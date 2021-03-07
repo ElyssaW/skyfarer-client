@@ -9,16 +9,16 @@ const Profile = (props) => {
             <p>Name: {props.currentUser.name}</p>
 
             <p>Characters</p>
-            {props.currentUser.characters.map(character => {
-                return <p>{character.name}</p>
-            })}
+            {props.currentUser.characters ? props.currentUser.characters.map(character => {
+                return <p>{character.name} < Link to={`/character/view/${character._id}`} ><button>View character</button></Link></p>
+            }) : null}
 
             <Link to='/character/new'><button>Make new character</button></Link>
 
             <p>Games</p>
-            {props.currentUser.games.map(game => {
+            {props.currentUser.games ? props.currentUser.games.map(game => {
                 <p>{game.title}</p>
-            })}
+            }) : null }
 
             <Link to='/game/new'><button>Make new game</button></Link>
         </div>

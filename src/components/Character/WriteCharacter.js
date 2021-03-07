@@ -29,6 +29,7 @@ const WriteCharacter = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault()
         console.log('Sending create character request...')
+        console.log(props.currentUser)
 
         let newChar = {
             name,
@@ -47,12 +48,13 @@ const WriteCharacter = (props) => {
                 { desc: `I will never ${integrity4}` }],
             publicNotes,
             privateNotes,
-            userId: props.currentUser.id,
+            userId: props.currentUser._id,
             gameId: '6043058a5e09284a6c123065'
         }
 
         axios.post(`${REACT_APP_SERVER_URL}character/new`, newChar)
         .then(res => {
+            console.log('New character created')
             console.log(res)
             props.nowCurrentUser(res.data.updatedUser)
             setNewChar(res.data.newCharacter)
@@ -64,7 +66,7 @@ const WriteCharacter = (props) => {
 
     let errorMsg = error ? <p>Error creating character</p> : null
 
-    // if (newChar) return <Redirect to={`/character/view/${newChar._id}`} currentUser={props.currentUser} />
+    if (newChar) return <Redirect to={`/character/view/${newChar._id}`} currentUser={props.currentUser} />
     
     return (
         < Container >

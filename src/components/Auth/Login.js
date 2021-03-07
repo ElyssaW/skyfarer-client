@@ -30,7 +30,7 @@ const Login = (props) => {
             const decoded = jwt_decode(token);
             console.log(decoded)
             // Set current user
-            props.nowCurrentUser(decoded);
+            props.nowCurrentUser(response.data.foundUser);
         })
         .catch(error => {
             console.log(`Login error`, error)
