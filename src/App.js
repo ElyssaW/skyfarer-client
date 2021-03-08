@@ -90,6 +90,14 @@ function App() {
     }
   }
 
+  const PrivateRoute = ({ component: Component, ...rest }) => {
+    const user = localStorage.getItem('jwtToken');
+    return <Route {...rest} render={(props) => {
+        return user ? <Component {...rest} {...props} /> : <Redirect to="/auth/login" />
+      }}
+    />;
+  }
+
   return (
     < Container >
       < Navbar currentUser={currentUser} handleLogout={handleLogout} />
@@ -126,7 +134,7 @@ function App() {
         <Route exact path="/game/new" render={() => {
           return < NewGame currentUser={currentUser} createGamesHash={createGameHash} /> }} />
         <Route path="/game/:id" render={(props) => {
-          return < Game currentUser={currentUser} gameId={props.match.params.id} game={gamesData[props.match.params.id]} /> 
+          return < Game currentUser={currentUser} gameId={props.match.params.id} gamesData={gamesData} /> 
          }} />
         <Route path="/game/:id/history" render={(props) => {
           return < Game search={props.match.params.id} /> 

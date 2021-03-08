@@ -7,6 +7,7 @@ const io = require('socket.io-client')
 
 const MessageWindow = (props) => {
 
+    const allMessages = props.game.messages
     const { messages, sendMessage } = useChat(props.gameId, props.currentUser)
     const [newMessage, setNewMessage] = useState('')
 
@@ -20,10 +21,18 @@ const MessageWindow = (props) => {
         setNewMessage('')
     }
 
+    const handleEdit = (e) => {
+        console.log('Handling edit')
+    }
+
+    const handleDelete = (e) => {
+        console.log('Handling delete')
+    }
+
     return (
         <div>
             MessageWindow
-            < Messages messages={messages} />
+            < Messages messages={allMessages.concat(messages)} currentUser={props.currentUser} handleEdit={handleEdit} handleDelete={handleDelete} />
             < MessageBox writeMessage={newMessage} handleChange={handleChange} handleSubmit={handleSubmit} />
         </div>
     )

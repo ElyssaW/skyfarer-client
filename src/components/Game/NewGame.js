@@ -18,7 +18,14 @@ const NewGame = (props) => {
         let newGame = {title, desc, tags, users, currentUser: props.currentUser}
 
         console.log(newGame)
-        axios.post(`${REACT_APP_SERVER_URL}game/new`, newGame)
+        axios({            
+            url: `${REACT_APP_SERVER_URL}game/new`,
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`
+            }, 
+            data: newGame 
+        })
         .then(res => {
             console.log(res)
             props.createGamesHash(res.data.gamesData)

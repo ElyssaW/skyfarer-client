@@ -61,7 +61,7 @@ const useChat = (gameId, currentUser) => {
     const sendMessage = (messageBody) => {
         socketRef.current.emit(newChatMessage, {
             body: messageBody,
-            senderId: socketRef.current.id
+            userId: currentUser ? currentUser._id : socketRef.current.id
         })
     }
 

@@ -22,13 +22,27 @@ const Game = (props) => {
         })
     }
 
-    return (
-        <div>
+    let gameDisplay
+    let game
+
+    if (props.gamesData) {
+        game = props.gamesData[props.gameId]
+        gameDisplay = (
+            <div>
             Game page
-            < MessageWindow currentUser={props.currentUser} gameId={props.gameId} />
+            < MessageWindow currentUser={props.currentUser} gameId={props.gameId} game={game} />
             {/* < Link to='/game/:id/history' >Message Backlog</Link> */}
             <button onClick={(e) => {handleDelete(e)}}>< Link to='/' >Delete Game</Link></button>
         </div>
+        )
+    } else {
+        gameDisplay = <p>Loading..</p>
+    }
+
+    return (
+        <>
+            {gameDisplay}
+        </>
     )
 }
 

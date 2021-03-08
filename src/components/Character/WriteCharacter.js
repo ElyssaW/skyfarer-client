@@ -52,7 +52,14 @@ const WriteCharacter = (props) => {
             gameId: props.currentUser.games[0]._id
         }
 
-        axios.post(`${REACT_APP_SERVER_URL}character/new`, newChar)
+        axios({            
+            url: `${REACT_APP_SERVER_URL}character/new`,
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`
+            }, 
+            data: newChar
+        })
         .then(res => {
             console.log('New character created')
             console.log(res)
