@@ -6,7 +6,6 @@ const Navbar = (props) => {
     return (
         <div className='nav-bar'>
             <NavLink className="nav-link" exact to="/"> Home </NavLink>
-            <NavLink className="nav-link" exact to="/game/:id">My Games</NavLink>
             <NavLink className="nav-link" exact to="/games/all">All Games</NavLink>
 
             { 

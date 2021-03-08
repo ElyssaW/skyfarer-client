@@ -22,12 +22,17 @@ const Login = (props) => {
         axios.post(`${REACT_APP_SERVER_URL}auth/login`, userData)
         .then(response => {
             console.log(response)
-            const { token } = response.data;
+            console.log(response.data.token)
+            const token = response.data.token;
             // Save token to localStorage
-            localStorage.setItem('jwtToken', token);
+            console.log('Setting...')
+            console.log(token)
+            localStorage.setItem('jwtToken',token);
             // Set token to auth header
+            console.log('Authing...')
             setAuthToken(token);
             // Decode token to get the user data
+            console.log('Decoding...')
             const decoded = jwt_decode(token);
             console.log(decoded)
             // Set current user
@@ -49,7 +54,8 @@ const Login = (props) => {
             {errorMsg}
             < Form >
                 <label>Email</label>
-                < Form.Control type='email' onChange={(e)=>{setEmail(e.target.value)}} />
+                < Form.Control type='emailnpm start
+                ' onChange={(e)=>{setEmail(e.target.value)}} />
 
                 <label>Password</label>
                 < Form.Control type='password' onChange={(e)=>{setPassword(e.target.value)}} />
