@@ -57,17 +57,19 @@ function App() {
       setCurrentUser(token)
 
       axios(`${REACT_APP_SERVER_URL}auth/data/${token._id}`).then(res => {
-        let gamesHash = {}
-
-        res.data.gamesData.forEach(game => {
-          gamesHash[game._id] = game
-        })
-
-        setGamesData(gamesHash)
-        setCurrentUser(res.data.currentUser)
+        createGameHash(res.data.gamesData)
+        nowCurrentUser(res.data.currentUser)
       })
     }
   }, []);
+
+  const createGameHash = (gamesData) => {
+    let gamesHash = {}
+    gamesData.forEach(game => {
+      gamesHash[game._id] = game
+    })
+    setGamesData(gamesHash)
+  }
 
   const nowCurrentUser = (userData) => {
     console.log('nowCurrentUser is working...');
@@ -83,6 +85,15 @@ function App() {
     }
   }
 
+  const PrivateRoute = ({ component: Component, ...rest }) => {
+    console.log('Private route')
+    const user = localStorage.getItem('jwtToken');
+    return <Route {...rest} render={(props) => {
+        return user ? <Component {...rest} {...props}  /> : <Redirect to="/auth/login" />
+      }}
+    />;
+  }
+
   return (
     < Container >
       < Navbar currentUser={currentUser} handleLogout={handleLogout} />
@@ -95,7 +106,7 @@ function App() {
         <Route exact path="/auth/login" render={(props) => {
           return < Login nowCurrentUser={nowCurrentUser} currentUser={currentUser} /> 
          }} />
-        <Route exact path="/auth/myprofile" render={(props) => {
+        <PrivateRoute exact path="/auth/myprofile" render={(props) => {
           return < Profile currentUser={currentUser} user={currentUser} /> 
          }} />
         <Route exact path="/auth/user/:id" render={(props) => {
@@ -105,7 +116,7 @@ function App() {
         <Route path="/character/view/:id" render={(props) => {
           return < Character characterId={props.match.params.id} /> 
          }} />
-        <Route exact path="/character/new" render={() => {
+        <PrivateRoute exact path="/character/new" render={() => {
           return < WriteCharacter currentUser={currentUser} nowCurrentUser={nowCurrentUser} />
         }} />
 
@@ -116,17 +127,17 @@ function App() {
           return < Games gamesData={gamesData} search={props.match.params.search} /> 
          }} />
 
-        <Route exact path="/game/new" render={() => {
-          return < NewGame currentUser={currentUser} /> }} />
-        <Route path="/game/:id" render={(props) => {
+        <PrivateRoute exact path="/game/new" render={() => {
+          return < NewGame currentUser={currentUser} createGamesHash={createGameHash} /> }} />
+        <PrivateRoute path="/game/:id" render={(props) => {
           return < Game currentUser={currentUser} gameId={props.match.params.id} game={gamesData[props.match.params.id]} /> 
          }} />
-        <Route path="/game/:id/history" render={(props) => {
+        <PrivateRoute path="/game/:id/history" render={(props) => {
           return < Game search={props.match.params.id} /> 
          }} />
 
-        <Route exact path="/gm/npc/:id" component={ NPC } />
-        <Route exact path="/gm/ship/:id" component={ Ship } />
+        <PrivateRoute exact path="/gm/npc/:id" component={ NPC } />
+        <PrivateRoute exact path="/gm/ship/:id" component={ Ship } />
 
         <Route component={ NotFound } />
       </ Switch >

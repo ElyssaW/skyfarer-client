@@ -49,7 +49,7 @@ const WriteCharacter = (props) => {
             publicNotes,
             privateNotes,
             userId: props.currentUser._id,
-            gameId: '6043058a5e09284a6c123065'
+            gameId: props.currentUser.games[0]._id
         }
 
         axios.post(`${REACT_APP_SERVER_URL}character/new`, newChar)

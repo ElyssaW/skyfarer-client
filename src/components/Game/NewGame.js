@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
+import { Redirect } from 'react-router-dom'
 import { Form, Col } from 'react-bootstrap'
-import { propTypes } from 'react-bootstrap/esm/Image'
 const axios = require('axios')
 const REACT_APP_SERVER_URL = process.env.REACT_APP_SERVER_URL
 
@@ -10,6 +10,7 @@ const NewGame = (props) => {
     const [desc, setDesc] = useState('')
     const [tags, setTags] = useState('')
     const [users, setUsers] = useState('')
+    const [createdGame, setCreatedGame] = useState(null)
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -20,8 +21,14 @@ const NewGame = (props) => {
         axios.post(`${REACT_APP_SERVER_URL}game/new`, newGame)
         .then(res => {
             console.log(res)
-            window.location = `/game/${res.data._id}`
+            props.createGamesHash(res.data.gamesData)
+            setCreatedGame(res.data.newGame)
         })
+    }
+
+    if (createdGame) {
+        console.log(createdGame)
+        return <Redirect to={`/game/${createdGame._id}`} />
     }
 
     return (
