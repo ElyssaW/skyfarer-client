@@ -8,12 +8,16 @@ const Profile = (props) => {
             <h1>Profile</h1>
             <p>Name: {props.currentUser.name}</p>
 
-            <p>Characters</p>
-            {props.currentUser.characters ? props.currentUser.characters.map(character => {
-                return <p>{character.name} < Link to={`/character/view/${character._id}`} ><button>View character</button></Link></p>
-            }) : null}
+            { props.currentUser.games.length > 0 ? 
+                (<>
+                    <p>Characters</p>
+                    {props.currentUser.characters ? props.currentUser.characters.map(character => {
+                        return <p>{character.name} < Link to={`/character/view/${character._id}`} ><button>View character</button></Link></p>
+                    }) : null}
 
-            <Link to='/character/new'><button>Make new character</button></Link>
+                    <Link to='/character/new'><button>Make new character</button></Link>
+                </>) : null
+            }
 
             <p>Games</p>
             {props.currentUser.games ? props.currentUser.games.map(game => {
