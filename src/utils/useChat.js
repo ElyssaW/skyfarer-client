@@ -59,9 +59,24 @@ const useChat = (gameId, currentUser) => {
     }, [])
 
     const sendMessage = (messageBody) => {
+        let commandWords = [ 
+            '!gm', '!ooc'
+        ].join('|')
+        let rollWords = [ 
+            '!veil', '!veils', '!iron', '!irons', '!mirror', 
+            '!mirrors', '!heart', '!hearts', '!peril', '!tenacity'
+        ].join('|')
+
+        let commands = messageBody.match(new RegExp(commandWords, 'gi'))
+        let rolls = messageBody.match(new RegExp(rollWords, 'gi'))
+        messageBody = messageBody.replace(new RegExp(commandWords.concat(rollWords), 'gi'), '').trim().replace(/ +/g, ' ')
+
         socketRef.current.emit(newChatMessage, {
             body: messageBody,
-            userId: currentUser ? currentUser._id : socketRef.current.id
+            username: currentUser ? currentUser.name : 'Guest',
+            userId: currentUser ? currentUser._id : socketRef.current.id,
+            commands: commands,
+            rolls: rolls
         })
     }
 

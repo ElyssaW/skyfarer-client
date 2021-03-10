@@ -1,5 +1,6 @@
 import React, { useState,useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import CharacterWindow from './CharacterWindow'
 const axios = require('axios')
 
 const REACT_APP_SERVER_URL = process.env.REACT_APP_SERVER_URL

@@ -22,15 +22,25 @@ const Game = (props) => {
         })
     }
 
+    let characters = {}
+    if (props.currentUser && props.currentUser.characters) {
+        console.log('Creating character hash map')
+        console.log(props.currentUser)
+        props.currentUser.characters.forEach(character => {
+            console.log(character)
+            characters[character._id] = character
+        }) 
+    }
+
     let gameDisplay
     let game
-
     if (props.gamesData) {
         game = props.gamesData[props.gameId]
+
         gameDisplay = (
             <div>
             Game page
-            < MessageWindow currentUser={props.currentUser} gameId={props.gameId} game={game} />
+            < MessageWindow currentUser={props.currentUser} gameId={props.gameId} characters={characters} game={game} />
             {/* < Link to='/game/:id/history' >Message Backlog</Link> */}
             <button onClick={(e) => {handleDelete(e)}}>< Link to='/' >Delete Game</Link></button>
         </div>

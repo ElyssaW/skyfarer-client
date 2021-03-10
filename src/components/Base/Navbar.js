@@ -12,7 +12,7 @@ const Navbar = (props) => {
             props.currentUser ? 
             <>
                 <NavLink className="nav-link" exact to="/auth/myprofile">{props.currentUser.name}</NavLink>
-                < button onClick={props.handleLogout} >Logout</button>
+                <NavLink className="nav-link" exact to="/" onClick={props.handleLogout}>Logout</NavLink>
             </> :
             <>
                 <NavLink className="nav-link" exact to="/auth/login"> Login </NavLink>

@@ -8,7 +8,7 @@ const Profile = (props) => {
             <h1>Profile</h1>
             <p>Name: {props.currentUser.name}</p>
 
-            { props.currentUser.games.length > 0 ? 
+            { props.currentUser.games && props.currentUser.games.length > 0 ? 
                 (<>
                     <p>Characters</p>
                     {props.currentUser.characters ? props.currentUser.characters.map(character => {

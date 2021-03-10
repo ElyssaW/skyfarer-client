@@ -22,14 +22,9 @@ const WriteCharacter = (props) => {
     const [integrity4, setIntegrity4] = useState('')
     const [publicNotes, setPublicNotes] = useState('')
     const [privateNotes, setPrivateNotes] = useState('')
-    const [addGame, setAddGame] = useState(null)
 
     const [error, setError] = useState(false)
     const [newChar, setNewChar] = useState(null)
-
-    const handleDropdown = (e) => {
-        setAddGame(e.target.value)
-    }
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -53,8 +48,7 @@ const WriteCharacter = (props) => {
                 { desc: `I will never ${integrity4}` }],
             publicNotes,
             privateNotes,
-            userId: props.currentUser._id,
-            gameId: addGame ? addGame : props.currentUser.games[0]._id
+            userId: props.currentUser._id
         }
 
         axios({            
@@ -75,10 +69,6 @@ const WriteCharacter = (props) => {
             setError(true)
         })
     }
-
-    let dropDownOptions = props.currentUser && props.currentUser.games ? props.currentUser.games.map(game => {
-        return <option value={game._id}>{game.title}</option>
-    }) : null
 
     let errorMsg = error ? <p>Error creating character</p> : null
 
@@ -179,13 +169,6 @@ const WriteCharacter = (props) => {
                 < Form.Label htmlFor='integretity-4' >Hidden Notes (Only you and your GM can see this)</Form.Label>
                 < Form.Control type='text' onChange={(e)=>{setPrivateNotes(e.target.value)}} name='private-notes' />
             </Form.Row>
-
-            <Form.Group controlId="exampleForm.SelectCustom">
-                <Form.Label>Add to game...</Form.Label>
-                <Form.Control as="select" onChange={(e) => {handleDropdown(e)}} custom>
-                {dropDownOptions}
-                </Form.Control>
-            </Form.Group>
 
             < input type='submit' onClick={handleSubmit} />
             </ Form >
