@@ -3,27 +3,94 @@ import { Form, Row, Col } from 'react-bootstrap'
 import Messages from './Messages'
 import MessageBox from './MessageBox'
 import CharacterWindow from '../../Character/CharacterWindow'
-import useChat from '../../../utils/useChat'
 const REACT_APP_SERVER_URL = process.env.REACT_APP_SERVER_URL
 const io = require('socket.io-client')
+const axios = require('axios')
 
 const MessageWindow = (props) => {
 
-    const allMessages = props.game.messages
-    const { messages, sendMessage } = useChat(props.gameId, props.currentUser)
     const [newMessage, setNewMessage] = useState('')
     const [playingAs, setPlayingAs] = useState(null)
+    const [messages, setMessages] = useState([...props.game.messages])
+    const socketRef = useRef()
+
+    let extraHeaders = props.currentUser ? {
+        userId: props.currentUser._id,
+        username: props.currentUser.name
+    } : {
+        userId: 'guest',
+        username: 'guest'
+    }
+
+    useEffect(() => {
+        socketRef.current = io(REACT_APP_SERVER_URL, {
+            withCredentials: false,
+            query: { gameId: props.game._id },
+            extraHeaders: extraHeaders
+        })
+
+        socketRef.current.on('newChatMessage', (message) => {
+            const incomingMessage = {
+                ...message,
+                ownedByCurrentUser: message.senderId === socketRef.currentId
+            }
+            setMessages((messages) => [...messages, incomingMessage])
+        })
+
+        return () => {
+            socketRef.current.disconnect()
+        }
+
+    }, [])
+
+    const sendMessage = (messageBody) => {
+        let commandWords = [ 
+            '!gm', '!ooc'
+        ].join('|')
+        let rollWords = [ 
+            '!veils', '!veil', '!irons', '!iron',  '!mirrors', 
+            '!mirror', '!hearts', '!heart', '!peril', '!tenacity'
+        ].join('|')
+
+        let commands = messageBody.match(new RegExp(commandWords, 'gi'))
+        let rolls = messageBody.match(new RegExp(rollWords, 'gi'))
+        messageBody = messageBody.replace(new RegExp(commandWords, 'gi'), '').trim().replace(/ +/g, ' ')
+        messageBody = messageBody.replace(new RegExp(rollWords, 'gi'), '').trim().replace(/ +/g, ' ')
+
+        socketRef.current.emit('newChatMessage', {
+            body: messageBody,
+            username: props.currentUser ? props.currentUser.name : 'Guest',
+            userId: props.currentUser ? props.currentUser._id : socketRef.current.id,
+            commands: commands,
+            rolls: rolls
+        })
+    }
 
     const handleChange = (e) => {
         setNewMessage(e.target.value)
     }
 
-    const handleEdit = (e) => {
+    const handleEdit = (message) => {
         console.log('Handling edit')
     }
 
-    const handleDelete = (e) => {
+    const handleDelete = (message, index) => {
         console.log('Handling delete')
+
+        let tempMessages = messages
+        tempMessages.splice(index)
+        setMessages([...tempMessages])
+
+        axios({
+            url: `${REACT_APP_SERVER_URL}message/delete/${message._id}`,
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`
+            }
+        })
+        .then(res => {
+            console.log(res)
+        })
     }
 
     const handleDropdown = (e) => {
@@ -58,7 +125,7 @@ const MessageWindow = (props) => {
             </Col>
             < Col >
                 MessageWindow
-                < Messages messages={allMessages.concat(messages)} currentUser={props.currentUser} handleEdit={handleEdit} handleDelete={handleDelete} />
+                < Messages messages={messages} currentUser={props.currentUser} handleEdit={handleEdit} handleDelete={handleDelete} />
                 < MessageBox writeMessage={newMessage} handleChange={handleChange} handleSubmit={handleSubmit} />
             </Col>
         </Row>

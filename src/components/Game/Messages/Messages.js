@@ -8,8 +8,8 @@ const Messages = (props) => {
     console.log(props.messages)
 
     if (props.messages) {
-        messageList = props.messages.map((message, i) => {
-            return < Message message={message} currentUser={props.currentUser} handleEdit={props.handleEdit} handleDelete={props.handleDelete} key={`msg-${i}`} />
+        messageList = props.messages.map((message, index) => {
+            return < Message message={message} currentUser={props.currentUser} handleEdit={props.handleEdit} handleDelete={props.handleDelete} index={index} />
         })
     }
 
