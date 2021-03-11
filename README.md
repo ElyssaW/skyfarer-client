@@ -11,7 +11,7 @@ A play-by-post app where the user can create new characters and games, and play 
 
 ## ERD
 
-![ERD](hhtps://github.com/ElyssaW/skyfarer-client/blob/main/public/erd.png?raw=true)
+![ERD](https://raw.githubusercontent.com/ElyssaW/skyfarer-client/main/public/erd.png)
 
 ## MVP
 
