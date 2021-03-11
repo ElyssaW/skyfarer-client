@@ -12,6 +12,7 @@ const MessageWindow = (props) => {
     const [newMessage, setNewMessage] = useState('')
     const [playingAs, setPlayingAs] = useState(null)
     const [messages, setMessages] = useState([...props.game.messages])
+    const [editMessage, setEditMessage] = useState(null)
     const socketRef = useRef()
 
     let extraHeaders = props.currentUser ? {
@@ -47,9 +48,8 @@ const MessageWindow = (props) => {
         if (playingAs) {
             let rollWords = [ 
                 '!veils', '!veil', '!irons', '!iron',  '!mirrors', 
-                '!mirror', '!hearts', '!heart', '!peril', '!tenacity', '!tenacity1',
-                '!tenacity3', '!tenacity6', '!gm', '!ooc', '-trait1', '+trait1', '-trait2', 
-                '+trait2'
+                '!mirror', '!hearts', '!heart', '!peril3', '!peril6', '!peril', '!tenacity1',
+                '!tenacity3', '!tenacity6', '!tenacity', '!gm', '!ooc'
             ].join('|')
     
             let rolls = messageBody.match(new RegExp(rollWords, 'gi'))
@@ -60,7 +60,6 @@ const MessageWindow = (props) => {
                 username: props.currentUser && props.currentUser.name ? props.currentUser.name : 'Guest',
                 userId: props.currentUser ? props.currentUser._id : socketRef.current.id,
                 character: playingAs,
-                commands: commands,
                 rolls: rolls
             })
         }
@@ -72,6 +71,38 @@ const MessageWindow = (props) => {
 
     const handleEdit = (message) => {
         console.log('Handling edit')
+        console.log(message)
+        setEditMessage(message)
+        setNewMessage(message.body)
+    }
+
+    const handleSubmitEdit = (e) => {
+        console.log('Submitting edit')
+        e.preventDefault()
+        console.log(editMessage)
+        console.log(newMessage)
+
+        let editedMessage = editMessage
+        editedMessage.body = newMessage
+        console.log(editedMessage)
+        
+        axios({
+            url: `${REACT_APP_SERVER_URL}message/edit/${editedMessage._id}`,
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`
+            },
+            data: editedMessage
+        })
+        .then(res => {
+            console.log(res)
+        })
+    }
+
+    const cancelEdit = (message) => {
+        console.log('Cancelling edit')
+        setEditMessage(null)
+        setNewMessage('')
     }
 
     const handleDelete = (message, index) => {
@@ -127,7 +158,7 @@ const MessageWindow = (props) => {
             < Col >
                 MessageWindow
                 < Messages messages={messages} currentUser={props.currentUser} handleEdit={handleEdit} handleDelete={handleDelete} />
-                < MessageBox writeMessage={newMessage} handleChange={handleChange} handleSubmit={handleSubmit} />
+                < MessageBox newMessage={newMessage} handleChange={handleChange} editMessage={editMessage} handleSubmitEdit={handleSubmitEdit} cancelEdit={cancelEdit} handleSubmit={handleSubmit} />
             </Col>
         </Row>
     )

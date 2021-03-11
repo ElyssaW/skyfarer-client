@@ -13,7 +13,13 @@ const Message = (props) => {
 
     let rolls = props.message.rolls ?
         props.message.rolls.map(roll => {
-            return <span> | {roll.stat}: {roll.roll + roll.bonus}</span>
+            if (roll) {
+                if (roll.stat == 'peril' || roll.stat == 'tenacity') {
+                    return <span> | {roll.stat}: {roll.roll}</span>
+                } else {
+                    return <span> | {roll.stat}: {roll.roll + roll.bonus} (Rolled {roll.roll} + {roll.bonus})</span>
+                }
+            }
         }) : null
 
     return (

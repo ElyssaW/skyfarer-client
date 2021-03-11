@@ -33,24 +33,11 @@ const Character = (props) => {
         })
     }
 
-    const profileData = character ? (
-        <div>
-            <p>Character page</p>
-            <p>Name: {character.name}</p>
-            <p>Irons: {character.irons}</p>
-            <p>Hearts: {character.hearts}</p>
-            <p>Mirros: {character.mirrors}</p>
-            <p>Veils: {character.veils}</p>
-            < Link to='/character/new' >New character</Link>
-            < Link to='/auth/myprofile' >< button onClick={handleDelete} >Delete character</button></Link>
-        </div>
-    ) :(
-        <p>Loading...</p>
-    )
-
     return (
         <div>
-            {profileData}
+            < CharacterWindow character={character} />
+            < Link to='/character/new' >New character</Link>
+            < Link to='/auth/myprofile' >< button onClick={handleDelete} >Delete character</button></Link>
         </div>
     )
 }

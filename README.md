@@ -38,3 +38,13 @@ These are goals that aren't necessarily central to the project or it's idea, but
 - [ ] Chatbot gm/player - it'll suck to play with, but it'll be fun
 - [ ] Adding a "crew morale" value, that the GM can lower or raise, which sets a floor for the players' peril (i.e., the crew will mutiny if they're unhappy with leadership)
 - [ ] Random event generation, allowing the GM to type !event and throw up a random scenario, for days when they just don't know what to throw at people
+
+## Roadblocks
+
+* The complexity of the relations - users can have multiple characters and games, and messages need to be associated with all three. Navigating so much information along with React could be difficult. When should I make database calls? How much info should I give to the user at any given time?
+
+* A chat command parser. Will it be difficult to create the parser, and intelligently connect it to database calls/chat events?
+
+* Coordinating information across multiple users - it's important the all players haved a common understanding, which means when data is updated on one user, it needs to cascade to all others in the chat.
+
+* I don't even know where to begin with the chatbot.
