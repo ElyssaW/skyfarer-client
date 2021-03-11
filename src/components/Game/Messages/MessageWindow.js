@@ -45,17 +45,14 @@ const MessageWindow = (props) => {
 
     const sendMessage = (messageBody) => {
         if (playingAs) {
-            let commandWords = [ 
-                '!gm', '!ooc'
-            ].join('|')
             let rollWords = [ 
                 '!veils', '!veil', '!irons', '!iron',  '!mirrors', 
-                '!mirror', '!hearts', '!heart', '!peril', '!tenacity'
+                '!mirror', '!hearts', '!heart', '!peril', '!tenacity', '!tenacity1',
+                '!tenacity3', '!tenacity6', '!gm', '!ooc', '-trait1', '+trait1', '-trait2', 
+                '+trait2'
             ].join('|')
     
-            let commands = messageBody.match(new RegExp(commandWords, 'gi'))
             let rolls = messageBody.match(new RegExp(rollWords, 'gi'))
-            messageBody = messageBody.replace(new RegExp(commandWords, 'gi'), '').trim().replace(/ +/g, ' ')
             messageBody = messageBody.replace(new RegExp(rollWords, 'gi'), '').trim().replace(/ +/g, ' ')
     
             socketRef.current.emit('newChatMessage', {

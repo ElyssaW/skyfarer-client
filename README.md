@@ -1,70 +1,40 @@
-# Getting Started with Create React App
+# SKYFARER
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A play-by-post app where the user can create new characters and games, and play Skyfarer online with their friends in a real-time Socket.io based chat.
 
-## Available Scripts
+## Tech Stack
 
-In the project directory, you can run:
+* React
+* MongoDB/Mongoose
+* Express
+* Socket.io
 
-### `npm start`
+## ERD
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+![ERD](hhtps://github.com/ElyssaW/skyfarer-client/blob/main/public/erd.png?raw=true)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## MVP
 
-### `npm test`
+- [x] User can create new account
+- [x] User can create new character/game
+- [x] User can message with other players in a real-time chat
+- [x] User can roll dice with their stats added, using chat commands such as !veils
+- [ ] Full CRUD functionality on chat messages
+- [ ] Characters will "die" when their peril is capped, and players can reduce peril by spending tenacity
+- [ ] Players can level up their characters, and GM can assign level ups
+- [ ] GMs/Players can create ships, and track their traits/values for use in game
+- [ ] Players can whipser messages to the GM by using the !gm command
+- [x] Players can write OOC messages by using the !ooc command
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Stretch
 
-### `npm run build`
+- [ ] Users can see a list of games, and send a request to join to the GM via private message
+- [ ] Chat has an "online users" list and a "user is typing" functionality
+- [ ] Chat has support for italics/bold/description
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Super Stretch
+These are goals that aren't necessarily central to the project or it's idea, but that personally interest me as something to pursue
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- [ ] Chatbot gm/player - it'll suck to play with, but it'll be fun
+- [ ] Adding a "crew morale" value, that the GM can lower or raise, which sets a floor for the players' peril (i.e., the crew will mutiny if they're unhappy with leadership)
+- [ ] Random event generation, allowing the GM to type !event and throw up a random scenario, for days when they just don't know what to throw at people
