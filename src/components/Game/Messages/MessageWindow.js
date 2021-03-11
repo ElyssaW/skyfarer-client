@@ -44,26 +44,29 @@ const MessageWindow = (props) => {
     }, [])
 
     const sendMessage = (messageBody) => {
-        let commandWords = [ 
-            '!gm', '!ooc'
-        ].join('|')
-        let rollWords = [ 
-            '!veils', '!veil', '!irons', '!iron',  '!mirrors', 
-            '!mirror', '!hearts', '!heart', '!peril', '!tenacity'
-        ].join('|')
-
-        let commands = messageBody.match(new RegExp(commandWords, 'gi'))
-        let rolls = messageBody.match(new RegExp(rollWords, 'gi'))
-        messageBody = messageBody.replace(new RegExp(commandWords, 'gi'), '').trim().replace(/ +/g, ' ')
-        messageBody = messageBody.replace(new RegExp(rollWords, 'gi'), '').trim().replace(/ +/g, ' ')
-
-        socketRef.current.emit('newChatMessage', {
-            body: messageBody,
-            username: props.currentUser ? props.currentUser.name : 'Guest',
-            userId: props.currentUser ? props.currentUser._id : socketRef.current.id,
-            commands: commands,
-            rolls: rolls
-        })
+        if (playingAs) {
+            let commandWords = [ 
+                '!gm', '!ooc'
+            ].join('|')
+            let rollWords = [ 
+                '!veils', '!veil', '!irons', '!iron',  '!mirrors', 
+                '!mirror', '!hearts', '!heart', '!peril', '!tenacity'
+            ].join('|')
+    
+            let commands = messageBody.match(new RegExp(commandWords, 'gi'))
+            let rolls = messageBody.match(new RegExp(rollWords, 'gi'))
+            messageBody = messageBody.replace(new RegExp(commandWords, 'gi'), '').trim().replace(/ +/g, ' ')
+            messageBody = messageBody.replace(new RegExp(rollWords, 'gi'), '').trim().replace(/ +/g, ' ')
+    
+            socketRef.current.emit('newChatMessage', {
+                body: messageBody,
+                username: props.currentUser && props.currentUser.name ? props.currentUser.name : 'Guest',
+                userId: props.currentUser ? props.currentUser._id : socketRef.current.id,
+                character: playingAs,
+                commands: commands,
+                rolls: rolls
+            })
+        }
     }
 
     const handleChange = (e) => {
@@ -78,7 +81,7 @@ const MessageWindow = (props) => {
         console.log('Handling delete')
 
         let tempMessages = messages
-        tempMessages.splice(index)
+        tempMessages.splice(index, 1)
         setMessages([...tempMessages])
 
         axios({
@@ -101,6 +104,7 @@ const MessageWindow = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        console.log('Sending...')
         sendMessage(newMessage)
         setNewMessage('')
     }
