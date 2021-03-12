@@ -11,7 +11,7 @@ const MessageWindow = (props) => {
 
     const [newMessage, setNewMessage] = useState('')
     const [playingAs, setPlayingAs] = useState(null)
-    const [messages, setMessages] = useState([...props.game.messages])
+    const [messages, setMessages] = useState([...props.gameState.messages])
     const [editMessage, setEditMessage] = useState(null)
     const socketRef = useRef()
 
@@ -26,22 +26,24 @@ const MessageWindow = (props) => {
     useEffect(() => {
         socketRef.current = io(REACT_APP_SERVER_URL, {
             withCredentials: false,
-            query: { gameId: props.game._id },
+            query: { gameId: props.gameState._id },
             extraHeaders: extraHeaders
         })
 
-        socketRef.current.on('newChatMessage', (message) => {
+        socketRef.current.on('newChatMessage', (message, updatedGame) => {
+            console.log('Updated game')
+            console.log(updatedGame)
             const incomingMessage = {
                 ...message,
                 ownedByCurrentUser: message.senderId === socketRef.currentId
             }
+            props.updateGameState(updatedGame)
             setMessages((messages) => [...messages, incomingMessage])
         })
 
         return () => {
             socketRef.current.disconnect()
         }
-
     }, [])
 
     const sendMessage = (messageBody) => {
@@ -71,7 +73,6 @@ const MessageWindow = (props) => {
 
     const handleEdit = (message) => {
         console.log('Handling edit')
-        console.log(message)
         setEditMessage(message)
         setNewMessage(message.body)
     }
@@ -79,12 +80,9 @@ const MessageWindow = (props) => {
     const handleSubmitEdit = (e) => {
         console.log('Submitting edit')
         e.preventDefault()
-        console.log(editMessage)
-        console.log(newMessage)
 
         let editedMessage = editMessage
         editedMessage.body = newMessage
-        console.log(editedMessage)
         
         axios({
             url: `${REACT_APP_SERVER_URL}message/edit/${editedMessage._id}`,
@@ -95,7 +93,12 @@ const MessageWindow = (props) => {
             data: editedMessage
         })
         .then(res => {
-            console.log(res)
+            console.log('New game data received')
+            let tempGameState = props.gameState
+            tempGameState.messages = res.data.updatedMessages
+            props.updateGameState(tempGameState)
+            setEditMessage(null)
+            setNewMessage('')
         })
     }
 
@@ -124,10 +127,8 @@ const MessageWindow = (props) => {
         })
     }
 
-    const handleDropdown = (e) => {
-        console.log('Drop down...')
-        console.log(e.target.value)
-        setPlayingAs(props.characters[e.target.value])
+    const handlePlayingAs = (e) => {
+        setPlayingAs(props.userCharacters[e.target.value])
     }
 
     const handleSubmit = (e) => {
@@ -148,7 +149,7 @@ const MessageWindow = (props) => {
                 
                 <Form.Group controlId="exampleForm.SelectCustom">
                     <Form.Label>Playing As...</Form.Label>
-                    <Form.Control as="select" onChange={(e) => {handleDropdown(e)}} value={playingAs} custom>
+                    <Form.Control as="select" onChange={(e) => {handlePlayingAs(e)}} value={playingAs} custom>
                     <option value={null}>Select character</option>
                     {dropDownOptions}
                     <option value={null}>Guest</option>
