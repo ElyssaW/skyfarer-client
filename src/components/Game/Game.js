@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Container } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import MessageWindow from './Messages/MessageWindow'
 
@@ -59,15 +60,12 @@ const Game = (props) => {
 
         gameDisplay = (
             <div>
-            Game page
             < MessageWindow 
                 currentUser={props.currentUser} 
                 userCharacters={userCharacters} 
                 gameState={gameState} 
                 updateGameState={updateGameState}
             />
-
-            <button onClick={(e) => {handleDelete(e)}}>< Link to='/' >Delete Game</Link></button>
         </div>
         )
     } else {
@@ -75,9 +73,9 @@ const Game = (props) => {
     }
 
     return (
-        <>
+        < div >
             {gameDisplay}
-        </>
+        </ div >
     )
 }
 

@@ -99,53 +99,55 @@ function App() {
   }
 
   return (
-    < Container >
-      < Navbar currentUser={currentUser} handleLogout={handleLogout} />
+    < div className='main-div' >
+      
       < Switch >
         <Route exact path="/" component={ Home } />
+          <div>
+            < Navbar currentUser={currentUser} handleLogout={handleLogout} />
+            <Route exact path="/auth/signup" render={(props) => {
+              return < Signup nowCurrentUser={nowCurrentUser} currentUser={currentUser} /> 
+            }} />
+            <Route exact path="/auth/login" render={(props) => {
+              return < Login nowCurrentUser={nowCurrentUser} currentUser={currentUser} /> 
+            }} />
+            <Route exact path="/auth/myprofile" render={(props) => {
+              return < Profile currentUser={currentUser} user={currentUser} /> 
+            }} />
+            <Route exact path="/auth/user/:id" render={(props) => {
+              return < Profile search={props.match.params.id} /> 
+            }} />
 
-        <Route exact path="/auth/signup" render={(props) => {
-          return < Signup nowCurrentUser={nowCurrentUser} currentUser={currentUser} /> 
-         }} />
-        <Route exact path="/auth/login" render={(props) => {
-          return < Login nowCurrentUser={nowCurrentUser} currentUser={currentUser} /> 
-         }} />
-        <Route exact path="/auth/myprofile" render={(props) => {
-          return < Profile currentUser={currentUser} user={currentUser} /> 
-         }} />
-        <Route exact path="/auth/user/:id" render={(props) => {
-          return < Profile search={props.match.params.id} /> 
-         }} />
+            <Route path="/character/view/:id" render={(props) => {
+              return < Character characterId={props.match.params.id} /> 
+            }} />
+            <Route exact path="/character/new" render={() => {
+              return < WriteCharacter currentUser={currentUser} nowCurrentUser={nowCurrentUser} />
+            }} />
 
-        <Route path="/character/view/:id" render={(props) => {
-          return < Character characterId={props.match.params.id} /> 
-         }} />
-        <Route exact path="/character/new" render={() => {
-          return < WriteCharacter currentUser={currentUser} nowCurrentUser={nowCurrentUser} />
-        }} />
+            <Route exact path="/games/all" render={(props) => {
+              return < Games gamesData={gamesData} /> 
+            }} />
+            <Route exact path="/games/all/:search" render={(props) => {
+              return < Games gamesData={gamesData} search={props.match.params.search} /> 
+            }} />
 
-        <Route exact path="/games/all" render={(props) => {
-          return < Games gamesData={gamesData} /> 
-         }} />
-        <Route exact path="/games/all/:search" render={(props) => {
-          return < Games gamesData={gamesData} search={props.match.params.search} /> 
-         }} />
+            <Route exact path="/game/new" render={() => {
+              return < NewGame currentUser={currentUser} createGamesHash={createGameHash} /> }} />
+            <Route path="/game/:id" render={(props) => {
+              return < Game currentUser={currentUser} gameId={props.match.params.id} gamesData={gamesData} /> 
+            }} />
+            <Route path="/game/:id/history" render={(props) => {
+              return < Game search={props.match.params.id} /> 
+            }} />
 
-        <Route exact path="/game/new" render={() => {
-          return < NewGame currentUser={currentUser} createGamesHash={createGameHash} /> }} />
-        <Route path="/game/:id" render={(props) => {
-          return < Game currentUser={currentUser} gameId={props.match.params.id} gamesData={gamesData} /> 
-         }} />
-        <Route path="/game/:id/history" render={(props) => {
-          return < Game search={props.match.params.id} /> 
-         }} />
+            <Route exact path="/gm/npc/:id" component={ NPC } />
+            <Route exact path="/gm/ship/:id" component={ Ship } />
 
-        <Route exact path="/gm/npc/:id" component={ NPC } />
-        <Route exact path="/gm/ship/:id" component={ Ship } />
-
-        <Route component={ NotFound } />
+          </div>
+          <Route component={ NotFound } />
       </ Switch >
-    </ Container >
+    </ div >
   )
 }
 

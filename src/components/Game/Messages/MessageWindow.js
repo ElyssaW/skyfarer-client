@@ -138,19 +138,34 @@ const MessageWindow = (props) => {
         setNewMessage('')
     }
 
+    const handleTenacitySpent = () => {
+        console.log('Spending tenacity')
+        let tempChar = playingAs
+        tempChar.tenacity--
+        tempChar.peril--
+        setPlayingAs(tempChar)
+    }
+
     let dropDownOptions = props.currentUser && props.currentUser.characters ? props.currentUser.characters.map(character => {
         return <option value={character._id}>{character.name}</option>
     }) : null
 
+    let spendTenacity = playingAs && playingAs.tenacity > 0 && playingAs.peril > 0 ?
+        (<div>
+            < button onClick={handleTenacitySpent} className='button' >Lower Peril</button>
+        </div> ) : null
+
     return (
-        < Row >
-            < Col className='col-3'>
+        < div className='flex' >
+            < Col className='col-2 character-sidebar'>
                 < CharacterWindow character={playingAs} />
+
+                {spendTenacity}
                 
                 <Form.Group controlId="exampleForm.SelectCustom">
-                    <Form.Label>Playing As...</Form.Label>
+                    <Form.Label className='subtitle'>Playing As...</Form.Label>
                     <Form.Control as="select" onChange={(e) => {handlePlayingAs(e)}} value={playingAs} custom>
-                    <option value={null}>Select character</option>
+                    <option value={null}> {playingAs ? playingAs.name : 'Select character' }</option>
                     {dropDownOptions}
                     <option value={null}>Guest</option>
                     </Form.Control>
@@ -161,7 +176,21 @@ const MessageWindow = (props) => {
                 < Messages messages={messages} currentUser={props.currentUser} handleEdit={handleEdit} handleDelete={handleDelete} />
                 < MessageBox newMessage={newMessage} handleChange={handleChange} editMessage={editMessage} handleSubmitEdit={handleSubmitEdit} cancelEdit={cancelEdit} handleSubmit={handleSubmit} />
             </Col>
-        </Row>
+            < Col className='col-2 character-sidebar'>
+                < CharacterWindow character={playingAs} />
+
+                {spendTenacity}
+                
+                <Form.Group controlId="exampleForm.SelectCustom">
+                    <Form.Label className='subtitle'>Playing As...</Form.Label>
+                    <Form.Control as="select" onChange={(e) => {handlePlayingAs(e)}} value={playingAs} custom>
+                    <option value={null}> {playingAs ? playingAs.name : 'Select character' }</option>
+                    {dropDownOptions}
+                    <option value={null}>Guest</option>
+                    </Form.Control>
+                </Form.Group>
+            </Col>
+        </div>
     )
 }
 
