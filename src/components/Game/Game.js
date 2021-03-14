@@ -14,6 +14,7 @@ const Game = (props) => {
     const [playerCharacters, setPlayerCharacters] = useState({})
     const [userCharacters, setUserCharacters] = useState(null)
     const [playingAs, setPlayingAs] = useState(null)
+    const [updating, setUpdating] = useState('')
 
     const [messages, setMessages] = useState([])
 
@@ -70,8 +71,12 @@ const Game = (props) => {
             extraHeaders: extraHeaders
         })
 
-        socketRef.current.on('newChatMessage', (newMessage) => {
+        socketRef.current.on('newChatMessage', (newMessage, updatedCharacter) => {
             setMessages((messages) => [...messages, newMessage])
+
+            if (updatedCharacter._id === playingAs._id) {
+                updatePlayingAs(updatedCharacter)
+            }
         })
 
         socketRef.current.on('updateMessages', (newMessages) => {
@@ -104,6 +109,10 @@ const Game = (props) => {
         let tempPlayerCharacters = playerCharacters
         tempPlayerCharacters[newPlayingAs._id] = newPlayingAs
         updatePlayerCharacters(tempPlayerCharacters)
+
+        const timer = setTimeout(() => {
+            setUpdating('')
+        }, 1000)
     }
 
     const updatePlayerCharacters = (newPlayerCharacters) => {
@@ -172,7 +181,7 @@ const Game = (props) => {
     }
 
     let gameDisplay
-    if (gameState) {
+    if (gameState && props.currentUser) {
         gameDisplay = (
             < Row className='game-window' >
                 < Col className='col-2 character-sidebar'>
@@ -180,6 +189,8 @@ const Game = (props) => {
                         playingAs={playingAs}
                         updatePlayingAs={updatePlayingAs}
                         userCharacters={userCharacters}
+                        pushUpdate={setUpdating}
+                        updating={updating}
                     />
                 </Col>
                 < Col >
@@ -192,6 +203,7 @@ const Game = (props) => {
                         sendMessage={sendMessage}
                         messages={messages}
                     />
+                    <span>{updating}</span>
                 </Col>
             </Row>
         )

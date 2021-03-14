@@ -2,9 +2,11 @@ import React from 'react'
 
 const CharacterWindow = (props) => {
 
+    let inDanger = props.character && props.character.inDanger ? <span>In Danger!</span> : null
+
     let characterDisplay = props.character ? (
         <>
-            <h4 className='title'>{props.character.name}</h4>
+            <h4 className='title'>{props.character.name}{inDanger}</h4>
             <p>Who is {props.character.traits[0].desc} and {props.character.traits[1].desc}</p>
 
             <h6 className='subtitle'>Stats</h6>

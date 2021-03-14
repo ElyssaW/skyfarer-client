@@ -81,6 +81,7 @@ const MessageWindow = (props) => {
                 < Messages 
                     messages={props.messages} 
                     currentUser={props.currentUser} 
+                    gameState={props.gameState}
                     handleEdit={handleEdit} 
                     handleDelete={handleDelete} 
                 />

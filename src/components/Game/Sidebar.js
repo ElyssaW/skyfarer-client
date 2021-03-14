@@ -18,6 +18,7 @@ const Sidebar = (props) => {
         tempChar.tenacity--
         tempChar.peril--
         props.updatePlayingAs(tempChar)
+        props.pushUpdate('Updating...')
     }
 
     let dropDownOptions = []
@@ -29,16 +30,31 @@ const Sidebar = (props) => {
         }
     }
 
+    const handleAddPeril = () => {
+        console.log('Adding peril')
+        let tempChar = props.playingAs
+        tempChar.tenacity++
+        tempChar.peril++
+        console.log(tempChar)
+        props.updatePlayingAs(tempChar)
+        props.pushUpdate('Updating...')
+    }
+
     let spendTenacity = props.playingAs && props.playingAs.tenacity > 0 && props.playingAs.peril > 0 ?
         (<div>
             < button onClick={handleTenacitySpent} className='button' >Lower Peril</button>
         </div> ) : null
 
+    let addPeril = <div>
+    < button onClick={handleAddPeril} className='button' >Raise Peril</button>
+</div>
+
     return (
         <>
             <CharacterWindow character={props.playingAs} />
 
-                {spendTenacity}
+            {spendTenacity}
+            {addPeril}
                     
             <Form.Group controlId="exampleForm.SelectCustom">
                 <Form.Label className='subtitle'>Playing As...</Form.Label>

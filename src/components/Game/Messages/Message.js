@@ -11,6 +11,9 @@ const Message = (props) => {
     let ooc = props.message.ooc ?
         <span>(Out of Character!)</span> : null
 
+    let gm = props.message.gmOnly ?
+        <span>(GM Only)</span> : null
+
     let rolls = props.message.rolls ?
         props.message.rolls.map((roll, i) => {
             if (roll) {
@@ -25,9 +28,9 @@ const Message = (props) => {
     return (
         <div>
             
-            {ooc}
+            {ooc}{gm}
             <h6>{props.message.body}{rolls}</h6>
-            <p>{props.message.username} - {editDelete}</p>
+            <p>{props.message.username} {editDelete}</p>
 
         </div>
     )
