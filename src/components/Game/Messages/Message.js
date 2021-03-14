@@ -2,7 +2,7 @@ import React from 'react'
 
 const Message = (props) => {
 
-    let editDelete = props.message.userId === props.currentUser._id ? (
+    let editDelete = props.currentUser && props.message.userId === props.currentUser._id ? (
         <span>
             <span onClick={() => {props.handleEdit(props.message, props.index)}}>Edit</span> - 
             <span onClick={() => {props.handleDelete(props.message, props.index)}}> Delete</span> 
@@ -12,12 +12,12 @@ const Message = (props) => {
         <span>(Out of Character!)</span> : null
 
     let rolls = props.message.rolls ?
-        props.message.rolls.map(roll => {
+        props.message.rolls.map((roll, i) => {
             if (roll) {
                 if (roll.stat == 'peril' || roll.stat == 'tenacity') {
-                    return <span> | {roll.stat}: {roll.roll}</span>
+                    return <span key={`roll-${props.index}-${i}`}> | {roll.stat}: {roll.roll}</span>
                 } else {
-                    return <span> | {roll.stat}: {roll.roll + roll.bonus} (Rolled {roll.roll} + {roll.bonus})</span>
+                    return <span key={`roll-${props.index}-${i}`}> | {roll.stat}: {roll.roll + roll.bonus} (Rolled {roll.roll} + {roll.bonus})</span>
                 }
             }
         }) : null

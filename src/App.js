@@ -8,6 +8,7 @@ import socketIOClient from 'socket.io-client'
 // Base components
 import Home from './components/Base/Home'
 import Navbar from './components/Base/Navbar'
+import Loading from './components/Base/Loading'
 import NotFound from './components/Base/NotFound'
 
 // User components
@@ -38,50 +39,51 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [gamesData, setGamesData] = useState(null)
 
-  console.log('Current user is...')
-  console.log(currentUser)
-
+  // Check for current user token in local storage
   useEffect(() => {
     let token
+
+    // If token does not exist...
     if (!localStorage.getItem('jwtToken')) {
+      // Set authenticated to false, and grab "guest" information
       setIsAuthenticated(false);
-      axios(`${REACT_APP_SERVER_URL}game/all`)
+      axios(`${REACT_APP_SERVER_URL}auth/data/guest`)
       .then(res => {
-        setGamesData(res.data)
+        console.log(res)
+        //createGameHash(res.data)
       })
     } else {
-      console.log(localStorage.getItem('jwtToken'))
+
+    // Set authenticated to true, and grab game/user data
       token = jwt_decode(localStorage.getItem('jwtToken'))
       setAuthToken(localStorage.jwtToken);
       setIsAuthenticated(true);
-      setCurrentUser(token)
-      console.log('Token')
-      console.log(token)
 
       axios(`${REACT_APP_SERVER_URL}auth/data/${token._id}`).then(res => {
-        createGameHash(res.data.gamesData)
-        console.log('Response')
-        console.log(res.data)
+        // createGameHash(res.data.gamesData)
         setCurrentUser(res.data.currentUser)
       })
     }
   }, []);
 
-  const createGameHash = (gamesData) => {
-    let gamesHash = {}
-    gamesData.forEach(game => {
-      gamesHash[game._id] = game
-    })
-    setGamesData(gamesHash)
-  }
+  // // Helper function to create a hash table of games data
+  // const createGameHash = (gamesData) => {
+  //   let gamesHash = {}
+  //   gamesData.forEach(game => {
+  //     gamesHash[game._id] = game
+  //   })
+  //   setGamesData(gamesHash)
+  // }
 
+  // Helper function to update React's info on the user, in case a change occurs
   const nowCurrentUser = (userData) => {
-    console.log('nowCurrentUser is working...')
+    console.log('Current user...')
     console.log(userData)
     setCurrentUser(userData);
     setIsAuthenticated(true);
   }
 
+  // Logs the user out
   const handleLogout = () => {
     if (localStorage.getItem('jwtToken')) {
       localStorage.removeItem('jwtToken');
@@ -90,21 +92,21 @@ function App() {
     }
   }
 
-  const PrivateRoute = ({ component: Component, ...rest }) => {
-    const user = localStorage.getItem('jwtToken');
-    return <Route {...rest} render={(props) => {
-        return user ? <Component {...rest} {...props} /> : <Redirect to="/auth/login" />
-      }}
-    />;
-  }
-
   return (
     < div className='main-div' >
       
       < Switch >
+        {/* Home route */}
         <Route exact path="/" component={ Home } />
           <div>
+            {/* Nav bar */}
             < Navbar currentUser={currentUser} handleLogout={handleLogout} />
+
+            <Route exact path="/loading" render={(props) => {
+              return < Loading currentUser={currentUser} /> 
+            }} />
+
+            {/* Signup, Login, profile page */}
             <Route exact path="/auth/signup" render={(props) => {
               return < Signup nowCurrentUser={nowCurrentUser} currentUser={currentUser} /> 
             }} />
@@ -112,12 +114,10 @@ function App() {
               return < Login nowCurrentUser={nowCurrentUser} currentUser={currentUser} /> 
             }} />
             <Route exact path="/auth/myprofile" render={(props) => {
-              return < Profile currentUser={currentUser} user={currentUser} /> 
-            }} />
-            <Route exact path="/auth/user/:id" render={(props) => {
-              return < Profile search={props.match.params.id} /> 
+              return < Profile currentUser={currentUser} /> 
             }} />
 
+            {/* Character view, new character, edit character */}
             <Route path="/character/view/:id" render={(props) => {
               return < Character characterId={props.match.params.id} /> 
             }} />
@@ -125,6 +125,7 @@ function App() {
               return < WriteCharacter currentUser={currentUser} nowCurrentUser={nowCurrentUser} />
             }} />
 
+            {/* All games, search all games */}
             <Route exact path="/games/all" render={(props) => {
               return < Games gamesData={gamesData} /> 
             }} />
@@ -132,8 +133,9 @@ function App() {
               return < Games gamesData={gamesData} search={props.match.params.search} /> 
             }} />
 
+            {/* New game, view game, view game history */}
             <Route exact path="/game/new" render={() => {
-              return < NewGame currentUser={currentUser} createGamesHash={createGameHash} /> }} />
+              return < NewGame currentUser={currentUser}  /> }} />
             <Route path="/game/:id" render={(props) => {
               return < Game currentUser={currentUser} gameId={props.match.params.id} gamesData={gamesData} /> 
             }} />

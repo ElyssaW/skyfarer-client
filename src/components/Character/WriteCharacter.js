@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Redirect } from 'react-router-dom'
-import { Form, Col, Dropdown } from 'react-bootstrap'
+import { Form, Col, Dropdown, Container } from 'react-bootstrap'
 import jwt_decode from 'jwt-decode';
 
 const REACT_APP_SERVER_URL = process.env.REACT_APP_SERVER_URL
@@ -75,9 +75,10 @@ const WriteCharacter = (props) => {
     if (newChar) return <Redirect to={`/character/view/${newChar._id}`} />
     
     return (
-        < div >
+        < Container >
             { errorMsg }
             < Form >
+            <h1 className="title">New Character</h1>
                 < Form.Group >
                     < Form.Label htmlFor='name' >I am...</Form.Label>
                     < Form.Control type='text' onChange={(e)=>{setName(e.target.value)}} name='name' />
@@ -170,9 +171,9 @@ const WriteCharacter = (props) => {
                 < Form.Control type='text' onChange={(e)=>{setPrivateNotes(e.target.value)}} name='private-notes' />
             </Form.Row>
 
-            < input type='submit' onClick={handleSubmit} />
+            < input type='submit' className="button long-button" onClick={handleSubmit} />
             </ Form >
-        </ div >
+        </  Container >
     )
 }
 
