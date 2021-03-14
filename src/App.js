@@ -56,6 +56,9 @@ function App() {
 
     // Set authenticated to true, and grab game/user data
       token = jwt_decode(localStorage.getItem('jwtToken'))
+      if (Date.now() >= token.exp * 1000) {
+        handleLogout()
+      }
       setAuthToken(localStorage.jwtToken);
       setIsAuthenticated(true);
 

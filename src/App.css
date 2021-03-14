@@ -36,6 +36,24 @@ body {
   border: none;
 }
 
+.inline {
+  display: inline;
+}
+
+.clipped {
+  clip-path: 
+  polygon(
+    0% 0px,                 /* top left */
+    0px 0%,                 /* top left */
+    calc(100% - 15px) 0%,    /* top right */
+    100% 15px,               /* top right */
+    100% calc(100% - 15px),  /* bottom right */
+    calc(100% - 15px) 100%,  /* bottom right */
+    0px 100%,               /* bottom left */
+    0 calc(100% - 0px)      /* bottom left */
+  );
+}
+
 .long-button {
   width: 100%;
   margin: 30px 0;
@@ -177,7 +195,17 @@ body {
   font-family: 'Cinzel Decorative', cursive; 
   font-size: 44px;
   text-align: center;
-  background-color: #f9f3e0;
+  background-color: #f9f3e0;  clip-path: 
+  polygon(
+    0% 0px,                 /* top left */
+    0px 0%,                 /* top left */
+    calc(100% - 0px) 0%,    /* top right */
+    100% 15px,               /* top right */
+    100% calc(100% - 15px),  /* bottom right */
+    calc(100% - 15px) 100%,  /* bottom right */
+    15px 100%,               /* bottom left */
+    0 calc(100% - 15px)      /* bottom left */
+  );
   box-shadow: -1px -6px 20px 6px rgba(145,35,112,0.24) inset;
 -webkit-box-shadow: -1px -6px 20px 6px rgba(145,35,112,0.24) inset;
 -moz-box-shadow: -1px -6px 20px 6px rgba(145,35,112,0.24) inset;
@@ -302,6 +330,17 @@ body {
   overflow-y: scroll;
 }
 
+.send-box {
+  width: 90%;
+  display: inline;
+  height: 50px;
+}
+
+.send-button {
+  width: 8%;
+  display: inline;
+}
+
 .character-sidebar {
   border-bottom: 6px double #412f2f;
   border-top: 6px double #412f2f;
@@ -310,4 +349,22 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.character-title {
+  padding: 0;
+  margin: 0;
+}
+
+.character-window-title {
+  display: flex;
+  align-items: center;
+  height: fit-content;
+}
+
+.danger-tag {
+  font-size: 14px;
+  background-color: lightsalmon;
+  padding: 0 20px 0 5px;
+  height: 100%;
 }

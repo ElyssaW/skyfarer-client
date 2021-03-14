@@ -8,8 +8,8 @@ const MessageBox = (props) => {
             < Form >
                 { !props.editMessage ? (
                     <>
-                    < Form.Control type='text' onChange={(e) => {props.handleChange(e)}} value={props.newMessage} />
-                    < button className='button' onClick={(e) => {props.handleSubmit(e)}}>
+                    < Form.Control type='text' className='send-box' onChange={(e) => {props.handleChange(e)}} value={props.newMessage} />
+                    < button className='button send-button' onClick={(e) => {props.handleSubmit(e)}}>
                         Send
                     </button>
                     </>

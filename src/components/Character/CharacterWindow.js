@@ -6,7 +6,9 @@ const CharacterWindow = (props) => {
 
     let characterDisplay = props.character ? (
         <>
-            <h4 className='title'>{props.character.name}{inDanger}</h4>
+            <div className='character-window-title'>
+                <h4 className='title inline character-title'>{props.character.name}</h4><span className='clipped danger-tag'>{inDanger}</span>
+            </div>
             <p>Who is {props.character.traits[0].desc} and {props.character.traits[1].desc}</p>
 
             <h6 className='subtitle'>Stats</h6>

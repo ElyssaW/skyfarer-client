@@ -1,5 +1,4 @@
 import React, { useState, useEffect} from 'react'
-import jwt_decode from 'jwt-decode';
 import { Form, Col } from 'react-bootstrap'
 import setAuthToken from '../../utils/setAuthToken';
 import { Redirect } from 'react-router-dom';

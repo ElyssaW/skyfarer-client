@@ -89,6 +89,14 @@ const Game = (props) => {
             setMessages([...newMessages])
         })
 
+        socketRef.current.on('updateSingleCharacter', (updatedCharacter) => {
+            console.log('Updating single character')
+            console.log(updatedCharacter)
+            let tempPlayerCharacters = playerCharacters
+            tempPlayerCharacters[updatedCharacter._id] = updatedCharacter
+            setPlayerCharacters(tempPlayerCharacters)
+        })
+
         socketRef.current.on('updatePlayerCharacters', (newPlayerCharacters) => {
             setPlayerCharacters(newPlayerCharacters)
         })
@@ -112,9 +120,7 @@ const Game = (props) => {
         tempUserCharacters[newPlayingAs._id] = newPlayingAs
         setUserCharacters(tempUserCharacters)
 
-        let tempPlayerCharacters = playerCharacters
-        tempPlayerCharacters[newPlayingAs._id] = newPlayingAs
-        updatePlayerCharacters(tempPlayerCharacters)
+        socketRef.current.emit('updateSingleCharacter', newPlayingAs)
 
         const timer = setTimeout(() => {
             setUpdating('')
@@ -124,9 +130,7 @@ const Game = (props) => {
     const updatePlayerCharacters = (newPlayerCharacters) => {
         setPlayerCharacters(newPlayerCharacters)
 
-        socketRef.current.emit('updatePlayerCharacters', {
-            newPlayerCharacters
-        })
+        socketRef.current.emit('updatePlayerCharacters', newPlayerCharacters)
     }
 
     const disconnectPlayingAs = (newPlayingAs) => {
