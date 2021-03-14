@@ -10,17 +10,17 @@ const MessageBox = (props) => {
                     <>
                     < Form.Control type='text' onChange={(e) => {props.handleChange(e)}} value={props.newMessage} />
                     < button className='button' onClick={(e) => {props.handleSubmit(e)}}>
-                        Send Message
+                        Send
                     </button>
                     </>
                 ) : (
                     <>
                     < Form.Control type='text' onChange={(e) => {props.handleChange(e)}} value={props.newMessage} />
                     < button className='button' onClick={(e) => {props.handleSubmitEdit(e)}}>
-                        Save Edited Message
+                        Save Edits
                     </button>
                     < button className='button' onClick={(e) => {props.cancelEdit(e)}}>
-                        Cancel
+                        Cancel Edits
                     </button>
                     </>
                 )}

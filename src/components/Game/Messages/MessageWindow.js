@@ -76,8 +76,7 @@ const MessageWindow = (props) => {
     return (
         < div className='flex' >
             
-            < Col >
-                MessageWindow
+            < Col className='message-window' >
                 < Messages 
                     messages={props.messages} 
                     currentUser={props.currentUser} 

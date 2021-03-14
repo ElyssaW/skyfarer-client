@@ -98,7 +98,7 @@ function App() {
       < Switch >
         {/* Home route */}
         <Route exact path="/" component={ Home } />
-          <div>
+          <div className='main'>
             {/* Nav bar */}
             < Navbar currentUser={currentUser} handleLogout={handleLogout} />
 

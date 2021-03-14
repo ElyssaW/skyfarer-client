@@ -42,15 +42,26 @@ const Sidebar = (props) => {
 
     let spendTenacity = props.playingAs && props.playingAs.tenacity > 0 && props.playingAs.peril > 0 ?
         (<div>
-            < button onClick={handleTenacitySpent} className='button' >Lower Peril</button>
+            < button onClick={handleTenacitySpent} className='button' >Lower Peril</button> 
+            <span>{props.updating}</span>
         </div> ) : null
 
     let addPeril = <div>
     < button onClick={handleAddPeril} className='button' >Raise Peril</button>
 </div>
 
+    if (props.display === 0) {
+        return (
+        <div>
+            <p>Game</p>
+            <p>Ship</p>
+            <p>Online</p>
+        </div>
+        )
+    }
+
     return (
-        <>
+        <div>
             <CharacterWindow character={props.playingAs} />
 
             {spendTenacity}
@@ -65,7 +76,7 @@ const Sidebar = (props) => {
                     <option value={''}>Guest</option>
                 </Form.Control>
             </Form.Group>
-        </>
+        </div>
     )
 }
 

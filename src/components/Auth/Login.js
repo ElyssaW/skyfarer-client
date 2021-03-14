@@ -41,7 +41,7 @@ const Login = (props) => {
     return (
         <div className='container'>
         <div className='form-div login-div'>
-            <h1 className='title block-title form-title'>Login</h1>
+            <h1 className='title ribbon drop-shadow'><p className='ribbon-border'>Login</p></h1>
             {errorMsg}
             < Form className='form login-form'>
                 <label>Email</label>
@@ -51,7 +51,7 @@ const Login = (props) => {
                 <label>Password</label>
                 < Form.Control type='password' onChange={(e)=>{setPassword(e.target.value)}} />
 
-                < input type='submit' className='button long-button' onClick={(e)=>{handleSubmit(e)}} />
+                < input type='submit' className='button drop-shadow long-button' onClick={(e)=>{handleSubmit(e)}} />
             </ Form >
         </div>
         </div>

@@ -1,11 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Tangerine:wght@700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Vollkorn&display=swap');
 
 body {
   font-family: 'Cinzel Decorative', cursive;
   font-family: 'Tangerine', cursive;
   font-family: 'Zilla Slab', serif;
+  font-family: 'Vollkorn', serif;
   width: 100%;
   height: 100%;
   background-color: #ffd0bc;
@@ -21,9 +23,15 @@ body {
   display: flex;
 }
 
+.drop-shadow {
+  box-shadow: 0px 19px 125px 2px rgba(145,35,112,0.24);
+  -webkit-box-shadow: 0px 19px 125px 2px rgba(145,35,112,0.24);
+  -moz-box-shadow: 0px 19px 125px 2px rgba(145,35,112,0.24);
+}
+
 .button {
   background-color: #412f2f;
-  color:  #ffd0bc;
+  color:  #f9f3e0;
   padding: 10px;
   border: none;
 }
@@ -31,11 +39,10 @@ body {
 .long-button {
   width: 100%;
   margin: 30px 0;
+  border: 5px double #f9f3e0;
 }
 
 .container {
-  display: flex;
-  justify-content: center;
   width: 100%;
   height: 100%;
 }
@@ -49,6 +56,44 @@ body {
   text-align: center;
   z-index: 2;
 }
+
+.ribbon-border {
+  border-top: 2px dashed wheat;
+  border-bottom: 2px dashed wheat;
+  width: 100%;
+  position: relative;
+  padding: 10px;
+  margin: 5px 0;
+}
+
+.ribbon {
+  width: 110%;
+  left: -5%;
+  position: relative;
+  background:  #412f2f;
+  color: #fff;
+  text-align: center;
+  padding: .2em;
+  margin: .5em auto 3em; 
+ }
+ .ribbon:before, .ribbon:after {
+  content: "";
+  position: absolute;
+  display: block;
+  bottom: -.5em;
+  border: 1em solid black;
+  z-index: -1;
+ }
+ .ribbon:before {
+  left: -2em;
+  border-right-width: 1.5em;
+  border-left-color: transparent;
+ }
+ .ribbon:after {
+  right: -2em;
+  border-left-width: 1.5em;
+  border-right-color: transparent;
+ }
 
 .title {
   font-size: 30px;
@@ -116,7 +161,7 @@ body {
 }
 
 .nav-link-bank {
-  border-bottom: 8px double #ffd0bc; 
+  border-bottom: 6px double #f9f3e0;
   justify-content: space-around;
   background-color: #412f2f ;
   width: 100%;
@@ -132,6 +177,7 @@ body {
   font-family: 'Cinzel Decorative', cursive; 
   font-size: 44px;
   text-align: center;
+  background-color: #f9f3e0;
   box-shadow: -1px -6px 20px 6px rgba(145,35,112,0.24) inset;
 -webkit-box-shadow: -1px -6px 20px 6px rgba(145,35,112,0.24) inset;
 -moz-box-shadow: -1px -6px 20px 6px rgba(145,35,112,0.24) inset;
@@ -203,13 +249,23 @@ body {
   justify-content: space-between;
   width: 60%;
   height: 100%;
-  border-right: 5px dashed #412f2f;
-  border-left: 5px dashed #412f2f;
-  border-bottom: 5px dashed #412f2f;
-  margin-top: 50px;
+  margin-top: 8%;
   box-shadow: 0px 19px 125px 2px rgba(145,35,112,0.24);
   -webkit-box-shadow: 0px 19px 125px 2px rgba(145,35,112,0.24);
   -moz-box-shadow: 0px 19px 125px 2px rgba(145,35,112,0.24);
+  border-top: 15px double black;
+  background-color: #f9f3e0;
+}
+
+.new-char-form {
+  align-items: initial;
+  width: 95%;
+  margin: 2%;
+  padding: 20px;
+}
+
+.signup-div {
+  margin-top: 2%;
 }
 
 .form-title {
@@ -218,16 +274,32 @@ body {
 
 .login-form {
   width: 80%;
-  padding: 20px;
+  position: relative;
+  top: -50px;
 }
 
 .game-div {
   display: flex;
   justify-content: center;
+  max-height: 88vh;
 }
 
 .game-window {
   width: 98%;
+  max-height: 100%;
+}
+
+.message-div {
+  max-height: 100%;
+}
+
+.message-window {
+  max-height: 100%;
+}
+
+.messages {
+  height: 75vh;
+  overflow-y: scroll;
 }
 
 .character-sidebar {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from 'react'
 import { Redirect } from 'react-router-dom'
-import { Form, Col } from 'react-bootstrap'
+import { Form, Col, Container } from 'react-bootstrap'
 import jwt_decode from 'jwt-decode';
 import setAuthToken from '../../utils/setAuthToken';
 const axios = require('axios')
@@ -38,9 +38,9 @@ const Signup= (props) => {
   if (props.currentUser) return <Redirect to="/auth/myprofile" currentUser={props.currentUser} />
 
   return (
-    <div>
-        <h1>Sign Up</h1>
-        < Form >
+      <Container className='form-div login-div signup-div'>
+        <h1 className='title ribbon drop-shadow'><p className='ribbon-border'>Sign Up</p></h1>
+        < Form className='form login-form signup' >
           < Form.Row >
             <label>Username</label>
             < Form.Control type='text' onChange={(e)=>{setUsername(e.target.value)}} />
@@ -61,9 +61,9 @@ const Signup= (props) => {
             < Form.Control type='password' onChange={(e)=>{setConfirmPassword(e.target.value)}} />
           </Form.Row >
 
-          <input type='submit' onClick={(e)=>{handleSubmit(e)}} />
+          <input type='submit' className='button long-button drop-shadow' onClick={(e)=>{handleSubmit(e)}} />
         </ Form >
-    </div>
+    </Container>
   )
 }
 

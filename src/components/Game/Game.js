@@ -15,7 +15,7 @@ const Game = (props) => {
     const [userCharacters, setUserCharacters] = useState(null)
     const [playingAs, setPlayingAs] = useState(null)
     const [updating, setUpdating] = useState('')
-
+    const [rightSidebar, setRightSidebar] = useState(0)
     const [messages, setMessages] = useState([])
 
     // -------- GAME STATE ----------------
@@ -56,15 +56,12 @@ const Game = (props) => {
 
     const socketRef = useRef()
 
-    let extraHeaders = props.currentUser ? {
-        userId: props.currentUser._id,
-        username: props.currentUser.name
-    } : {
-        userId: 'guest',
-        username: 'guest'
-    }
-
     useEffect(() => {
+        let extraHeaders = props.currentUser ? {
+            userId: props.currentUser._id,
+            username: props.currentUser.name
+        } : null
+
         socketRef.current = io(REACT_APP_SERVER_URL, {
             withCredentials: false,
             query: { gameId: props.gameId },
@@ -72,10 +69,19 @@ const Game = (props) => {
         })
 
         socketRef.current.on('newChatMessage', (newMessage, updatedCharacter) => {
-            setMessages((messages) => [...messages, newMessage])
-
-            if (updatedCharacter._id === playingAs._id) {
+            if (updatedCharacter.userId === props.currentUser._id) {
                 updatePlayingAs(updatedCharacter)
+            }
+
+            if (messages.length >= 30) {
+                let newMessages = messages
+                newMessages.push(newMessage)
+                newMessages = newMessages.slice(newMessages.length-29)
+
+                console.log(newMessages)
+                setMessages((messages) => [...newMessages])
+            } else {
+                setMessages((messages) => [...messages, newMessage])
             }
         })
 
@@ -95,14 +101,14 @@ const Game = (props) => {
             if (playingAs) {
                 disconnectPlayingAs(playingAs)
             }
-            socketRef.current.disconnect()
+            socketRef.current.disconnect(playingAs)
         }
-    }, [])
+    }, [props.currentUser])
 
     const updatePlayingAs = (newPlayingAs) => {
         setPlayingAs(newPlayingAs)
 
-        let tempUserCharacters = userCharacters
+        let tempUserCharacters = userCharacters ? userCharacters : {}
         tempUserCharacters[newPlayingAs._id] = newPlayingAs
         setUserCharacters(tempUserCharacters)
 
@@ -180,20 +186,29 @@ const Game = (props) => {
         })
     }
 
+    const leftSidebarDisplay = 
+        < Col className='col-2 character-sidebar'>
+            < Sidebar 
+                playingAs={playingAs}
+                updatePlayingAs={updatePlayingAs}
+                userCharacters={userCharacters}
+                pushUpdate={setUpdating}
+                updating={updating}
+            />
+        </Col>
+
+    let rightSidebarDisplay
+    switch (rightSidebar) {
+        case 0:
+
+    }
+
     let gameDisplay
     if (gameState && props.currentUser) {
         gameDisplay = (
             < Row className='game-window' >
-                < Col className='col-2 character-sidebar'>
-                    < Sidebar 
-                        playingAs={playingAs}
-                        updatePlayingAs={updatePlayingAs}
-                        userCharacters={userCharacters}
-                        pushUpdate={setUpdating}
-                        updating={updating}
-                    />
-                </Col>
-                < Col >
+                {leftSidebarDisplay}
+                < Col className='message-div'>
                     < MessageWindow 
                         currentUser={props.currentUser} 
                         userCharacters={userCharacters} 
@@ -203,7 +218,16 @@ const Game = (props) => {
                         sendMessage={sendMessage}
                         messages={messages}
                     />
-                    <span>{updating}</span>
+                </Col>
+                < Col className='col-2 character-sidebar'>
+                    < Sidebar 
+                        display={0}
+                        playingAs={playingAs}
+                        updatePlayingAs={updatePlayingAs}
+                        userCharacters={userCharacters}
+                        pushUpdate={setUpdating}
+                        updating={updating}
+                    />
                 </Col>
             </Row>
         )

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import Message from './Message'
 
 const Messages = (props) => {
@@ -13,9 +13,17 @@ const Messages = (props) => {
         })
     : null
 
+    const AlwaysScrollToBottom = () => {
+        const elementRef = useRef()
+        useEffect(() => elementRef.current.scrollIntoView())
+        return <div ref={elementRef} />
+      }
+
     return (
-        <div>
+        <div className='messages'>
             {messageList}
+
+            < AlwaysScrollToBottom />
         </div>
     )
 }
