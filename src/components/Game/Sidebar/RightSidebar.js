@@ -73,21 +73,28 @@ const RightSidebar = (props) => {
     }
 
     let sidebarColumn = collapsed ? (
-        <p onClick={()=>{setCollapsed(!collapsed)}}>
+        < Col className='col-1 character-sidebar-collapsed'>
             < SidebarNav
                 changeIndex={changeIndex}
                 gameId={props.gameState._id}
+                collapsed={collapsed}
+                setCollapsed={setCollapsed}
+                className={'sidebar-nav-collapsed'}
             />
-        </p>
+        </ Col >
     ) : (
+        <>
         < Col className='col-3 character-sidebar'>
             {sidebar}
             < SidebarNav
                 changeIndex={changeIndex}
                 gameId={props.gameState._id}
+                collapsed={collapsed}
+                setCollapsed={setCollapsed}
+                className={'sidebar-nav'}
             />
-             <p onClick={()=>{setCollapsed(!collapsed)}}>Close</p>
         </ Col >
+        </>
     )
 
     return (

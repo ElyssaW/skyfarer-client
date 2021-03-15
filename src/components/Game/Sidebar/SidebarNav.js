@@ -3,13 +3,23 @@ import { Link } from 'react-router-dom'
 
 const SidebarNav = (props) => {
     return (
-        <div>
-            <span onClick={()=>{props.changeIndex(0)}}>Chat</span> -
-            <span onClick={()=>{props.changeIndex(1)}}>Game</span> - 
-            <span onClick={()=>{props.changeIndex(2)}}>Users</span> - 
-            <span onClick={()=>{props.changeIndex(3)}}>Ship</span> - 
-            <span onClick={()=>{props.changeIndex(4)}}>Characters</span> - 
-            <Link to={`/history/${props.gameId}`}>History</Link>
+        <div className={props.className}>
+            <span onClick={()=>{props.setCollapsed(false) 
+                                props.changeIndex(0)}}>Chat</span>
+
+            <span onClick={()=>{props.setCollapsed(false)
+                                props.changeIndex(1)}}> Game</span> 
+
+            <span onClick={()=>{props.setCollapsed(false)
+                                props.changeIndex(2)}}> Online</span> 
+
+            <span onClick={()=>{props.setCollapsed(false)
+                                props.changeIndex(3)}}> Ship</span>  
+
+            <Link to={`/history/${props.gameId}`}> History</Link>
+            <span onClick={()=>{props.setCollapsed(!props.collapsed)}}> 
+                { props.collapsed ? 'Open' : 'Close' }
+            </span>
         </div>
     )
 }

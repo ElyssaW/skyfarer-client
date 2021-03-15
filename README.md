@@ -30,7 +30,7 @@ A play-by-post app where the user can create new characters and games, and play 
 
 - [ ] Users can see a list of games, and send a request to join to the GM via private message
 - [ ] Chat has an "online users" list and a "user is typing" functionality
-- [ ] Chat has support for italics/bold/description
+- [x] Chat has support for italics/bold/description
 
 ## Super Stretch
 These are goals that aren't necessarily central to the project or its idea, but that personally interest me as something to pursue

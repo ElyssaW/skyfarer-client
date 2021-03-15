@@ -33,7 +33,7 @@ const Message = (props) => {
         <div>
             
             {ooc}{gm}
-            <h6>{props.message.body}{rolls}</h6>
+            <h6><span dangerouslySetInnerHTML={{ __html: props.message.body }} />{rolls}</h6>
             <p>{props.message.username} {editDelete}</p>
 
         </div>

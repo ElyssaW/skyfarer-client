@@ -13,7 +13,7 @@ const LeftSidebar = (props) => {
         }
     }
 
-    const handleTenacitySpent = () => {
+    const handleSpendTenacity = () => {
         console.log('Spending tenacity')
         if (props.playingAs.tenacity > 0 && 
             props.playingAs.peril > 0) {
@@ -44,6 +44,15 @@ const LeftSidebar = (props) => {
             props.pushUpdate('Updating...')
         }
     }
+
+    const removeDanger = () => {
+        if (props.playingAs && props.playingAs.inDanger) {
+            let tempChar = props.playingAs
+            tempChar.inDanger = false
+            props.updatePlayingAs(tempChar)
+        }
+        props.pushUpdate()
+    }
     
     let dropDownOptions = []
     if (props.userCharacters) {
@@ -54,23 +63,20 @@ const LeftSidebar = (props) => {
         }
     }
 
-    let perilTenacity = props.playingAs ? (
-        <div className='sidebar-button-bank'>
-        < button onClick={handleTenacitySpent} className='button' >Lower Peril</button>
-        < button onClick={handleAddPeril} className='button' >Raise Peril</button>
-        < button onClick={handleAddTenacity} className='button' >Raise Tenacity</button>
-        </div>
-    ) : null
-
     return (
         <div>
-            <CharacterWindow character={props.playingAs} />
-
-            {perilTenacity}
+            <CharacterWindow 
+                character={props.playingAs} 
+                handleSpendTenacity={handleSpendTenacity}
+                handleAddPeril={handleAddPeril}
+                handleAddTenacity={handleAddTenacity}
+                removeDanger={removeDanger}
+            />
                     
-            <Form.Group className='character-select'  controlId="exampleForm.SelectCustom">
-                <Form.Control as="select" onChange={(e) => {handlePlayingAs(e)}} value={props.playingAs} custom>
-                    <option value={''}> {props.playingAs ? props.playingAs.name : 'Select character' }</option>
+            <Form.Group   
+            controlId="exampleForm.SelectCustom">
+                <Form.Control className='character-select' as="select" onChange={(e) => {handlePlayingAs(e)}} value={props.playingAs} custom>
+                    <option value={''}> {props.playingAs ? props.playingAs.name : 'Select character >' }</option>
                     {dropDownOptions}
                     <option value={''}>Guest</option>
                 </Form.Control>

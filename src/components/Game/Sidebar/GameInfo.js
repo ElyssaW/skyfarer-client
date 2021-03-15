@@ -9,12 +9,12 @@ const GameInfo = (props) => {
             <p className='character-window-subtitle'>{props.gameState.desc}</p>
 
             <div>
-                <h4 className='subtitle sidebar-subtitle clipped'>Invite</h4>
-                <p className='sidebar-subsection'>Invite new friends with this link: <div className='invite-link'>{`${REACT_APP_SERVER_URL}game/${props.gameState._id}`}</div></p>
+                <h4 className='subtitle sidebar-subtitle-left clipped-left'>Invite</h4>
+                <p className='sidebar-subsection-left'>Invite new friends with this link: <div className='invite-link'>{`${REACT_APP_SERVER_URL}game/${props.gameState._id}`}</div></p>
             </div>
 
-            <h4 className='subtitle sidebar-subtitle clipped'>Tags</h4>
-            <p className='sidebar-subsection'>Tags: {props.gameState.tags.join(', ')}</p>
+            <h4 className='subtitle sidebar-subtitle-left clipped-left'>Tags</h4>
+            <p className='sidebar-subsection-left'>Tags: {props.gameState.tags.join(', ')}</p>
         </div>
     )
 }
