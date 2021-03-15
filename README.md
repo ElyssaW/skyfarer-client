@@ -21,7 +21,7 @@ A play-by-post app where the user can create new characters and games, and play 
 - [x] User can roll dice with their stats added, using chat commands such as !veils
 - [x] Full CRUD functionality on chat messages
 - [x] Characters will "die" when their peril is capped, and players can reduce peril by spending tenacity
-- [ ] Players can level up their characters, and GM can assign level ups
+- [x] Players can level up their characters, and GM can assign level ups
 - [ ] GMs/Players can create ships, and track their traits/values for use in game
 - [x] Players can whipser messages to the GM by using the !gm command
 - [x] Players can write OOC messages by using the !ooc command

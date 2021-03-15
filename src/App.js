@@ -18,7 +18,8 @@ import Profile from './components/Auth/Profile'
 
 // Character components
 import Character from './components/Character/Character'
-import WriteCharacter from './components/Character/WriteCharacter'
+import WriteCharacter from './components/Character/NewCharacter'
+import EditCharacter from './components/Character/EditCharacter'
 
 // Game components
 import Game from './components/Game/Game'
@@ -118,6 +119,9 @@ function App() {
             }} />
             <Route exact path="/character/new" render={() => {
               return < WriteCharacter currentUser={currentUser} nowCurrentUser={nowCurrentUser} />
+            }} />
+            <Route exact path="/character/edit/:id" render={(props) => {
+              return < EditCharacter currentUser={currentUser} characterId={props.match.params.id} />
             }} />
 
             {/* All games, search all games */}

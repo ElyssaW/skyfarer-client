@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import CharacterWindow from './CharacterWindow'
+import EditCharacter from './EditCharacter'
 const axios = require('axios')
 
 const REACT_APP_SERVER_URL = process.env.REACT_APP_SERVER_URL
@@ -8,6 +9,7 @@ const REACT_APP_SERVER_URL = process.env.REACT_APP_SERVER_URL
 const Character = (props) => {
 
     const [character, setCharacter] = useState(null)
+    const [editing, setEditing] = useState(false)
 
     useEffect(() => {
         console.log('Retrieving character...')
@@ -33,13 +35,27 @@ const Character = (props) => {
         })
     }
 
-    return (
+    let characterDisplay = editing && character ? (
+        <div>
+            < EditCharacter 
+                character={character}
+                currentUser={props.currentUser}
+            />
+        </div>
+    ) : character ? (
         <div>
             < CharacterWindow character={character} />
             < Link to='/character/new' >New character</Link>
+            < button onClick={() => setEditing(true)} >Edit character</button>
             < Link to='/auth/myprofile' >< button onClick={handleDelete} >Delete character</button></Link>
         </div>
-    )
+    ) : null
+
+    return (
+        <>
+            {characterDisplay}
+        </>
+    ) 
 }
 
 export default Character
