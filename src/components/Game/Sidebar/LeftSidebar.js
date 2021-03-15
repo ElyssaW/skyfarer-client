@@ -15,21 +15,34 @@ const LeftSidebar = (props) => {
 
     const handleTenacitySpent = () => {
         console.log('Spending tenacity')
-        let tempChar = props.playingAs
-        tempChar.tenacity--
-        tempChar.peril--
-        props.updatePlayingAs(tempChar)
-        props.pushUpdate('Updating...')
+        if (props.playingAs.tenacity > 0 && 
+            props.playingAs.peril > 0) {
+            let tempChar = props.playingAs
+            tempChar.tenacity--
+            tempChar.peril--
+            props.updatePlayingAs(tempChar)
+            props.pushUpdate('Updating...')
+        }
     }
 
     const handleAddPeril = () => {
         console.log('Adding peril')
-        let tempChar = props.playingAs
-        tempChar.tenacity++
-        tempChar.peril++
-        console.log(tempChar)
-        props.updatePlayingAs(tempChar)
-        props.pushUpdate('Updating...')
+        if (props.playingAs.peril < 10) {
+            let tempChar = props.playingAs
+            tempChar.peril++
+            props.updatePlayingAs(tempChar)
+            props.pushUpdate('Updating...')
+        }
+    }
+
+    const handleAddTenacity = () => {
+        console.log('Adding tenacity')
+        if (props.playingAs.tenacity < props.playingAs.tenacityMax) {
+            let tempChar = props.playingAs
+            tempChar.tenacity++
+            props.updatePlayingAs(tempChar)
+            props.pushUpdate('Updating...')
+        }
     }
     
     let dropDownOptions = []
@@ -41,26 +54,21 @@ const LeftSidebar = (props) => {
         }
     }
 
-    let spendTenacity = props.playingAs && props.playingAs.tenacity > 0 && props.playingAs.peril > 0 ?
-        (<div>
-            < button onClick={handleTenacitySpent} className='button' >Lower Peril</button> 
-            <span>{props.updating}</span>
-        </div> ) : null
-
-    let addPeril = <div>
-    < button onClick={handleAddPeril} className='button' >Raise Peril</button>
-</div>
+    let perilTenacity = props.playingAs ? (
+        <div className='sidebar-button-bank'>
+        < button onClick={handleTenacitySpent} className='button' >Lower Peril</button>
+        < button onClick={handleAddPeril} className='button' >Raise Peril</button>
+        < button onClick={handleAddTenacity} className='button' >Raise Tenacity</button>
+        </div>
+    ) : null
 
     return (
         <div>
             <CharacterWindow character={props.playingAs} />
 
-            {spendTenacity}
-            {addPeril}
+            {perilTenacity}
                     
-            <Form.Group controlId="exampleForm.SelectCustom">
-                <Form.Label className='subtitle'>Playing As...</Form.Label>
-
+            <Form.Group className='character-select'  controlId="exampleForm.SelectCustom">
                 <Form.Control as="select" onChange={(e) => {handlePlayingAs(e)}} value={props.playingAs} custom>
                     <option value={''}> {props.playingAs ? props.playingAs.name : 'Select character' }</option>
                     {dropDownOptions}

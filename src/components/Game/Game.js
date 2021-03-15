@@ -246,7 +246,6 @@ const Game = (props) => {
                     />
                 </Col>
 
-                < Col className='col-3 character-sidebar'>
                     < RightSidebar 
                         playingAs={playingAs}
                         updatePlayingAs={updatePlayingAs}
@@ -257,7 +256,6 @@ const Game = (props) => {
                         playerCharacters={playerCharacters}
                         gameState={gameState}
                     />
-                </Col>
             </Row>
         )
     } else {

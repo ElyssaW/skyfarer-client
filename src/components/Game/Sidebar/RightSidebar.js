@@ -1,23 +1,44 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Form } from 'react-bootstrap'
+import { Form, Col } from 'react-bootstrap'
+import SidebarNav from './SidebarNav'
 import CharacterWindow from '../../Character/CharacterWindow'
 import OnlineUsers from './OnlineUsers'
 import PlayerCharacters from './PlayerCharacters'
+import ChatCommands from './ChatCommands'
+import ShipInfo from './ShipInfo'
+import GameInfo from './GameInfo'
 
 const RightSidebar = (props) => {
 
     const [sidebarIndex, setSidebarIndex] = useState(0)
     const [sidebarDisplay, setSidebarDisplay] = useState(null)
+    const [collapsed, setCollapsed] = useState(false)
     const [updating, setUpdating] = useState('')
+
+    const changeIndex = (i) => {
+        setSidebarIndex(i)
+    }
 
     let sidebar
     switch (sidebarIndex) {
+        case 0:
+            sidebar = (
+                <ChatCommands/>
+            )
+            break;
+        case 1:
+            sidebar = (
+                <>
+                <GameInfo
+                    gameState={props.gameState}
+                />
+                </>
+            )
+            break;
         case 2:
             sidebar = (
-                <div>
-                    <p>Game</p>
-                    <p>Ship</p>
+                <>
                     <p>Online</p>
                     < OnlineUsers
                         onlineUsers={props.onlineUsers} 
@@ -26,14 +47,12 @@ const RightSidebar = (props) => {
                         setSidebarIndex={setSidebarIndex}
                         setUpdating={setUpdating}
                     />
-                </div>
+                </>
                 )
             break;
-        case 6:
+        case 3:
             sidebar = (
-                < CharacterWindow 
-                    character={sidebarDisplay}
-                />
+                <ShipInfo/>
             )
             break;
         case 4:
@@ -44,29 +63,36 @@ const RightSidebar = (props) => {
                 />
             )
             break;
-        default:
+        case 6:
             sidebar = (
-                <div>
-                    Right sidebar
-                </div>
+                < CharacterWindow 
+                    character={sidebarDisplay}
+                />
             )
             break;
     }
 
-    const changeIndex = (i) => {
-        setSidebarIndex(i)
-    }
+    let sidebarColumn = collapsed ? (
+        <p onClick={()=>{setCollapsed(!collapsed)}}>
+            < SidebarNav
+                changeIndex={changeIndex}
+                gameId={props.gameState._id}
+            />
+        </p>
+    ) : (
+        < Col className='col-3 character-sidebar'>
+            {sidebar}
+            < SidebarNav
+                changeIndex={changeIndex}
+                gameId={props.gameState._id}
+            />
+             <p onClick={()=>{setCollapsed(!collapsed)}}>Close</p>
+        </ Col >
+    )
 
     return (
         <>
-            {sidebar}
-            <p>
-                Game - 
-                <span onClick={()=>{changeIndex(2)}}>Users</span> - 
-                Ship - 
-                <span onClick={()=>{changeIndex(4)}}>Characters</span> - 
-                <Link to={`/history/${props.gameState._id}`}>History</Link>
-            </p>
+            {sidebarColumn}
         </>
     )
 }
