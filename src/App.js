@@ -28,6 +28,7 @@ import NewGame from './components/Game/NewGame'
 // Misc components
 import NPC from './components/GM/NPC'
 import Ship from './components/GM/Ship'
+import MessageBacklog from './components/Game/Messages/MessageBacklog';
 
 const REACT_APP_SERVER_URL = process.env.REACT_APP_SERVER_URL
 const axios = require('axios')
@@ -133,8 +134,8 @@ function App() {
             <Route path="/game/:id" render={(props) => {
               return < Game currentUser={currentUser} gameId={props.match.params.id} gamesData={gamesData} /> 
             }} />
-            <Route path="/game/:id/history" render={(props) => {
-              return < Game search={props.match.params.id} /> 
+            <Route path="/history/:id" render={(props) => {
+                return < MessageBacklog gameId={props.match.params.id} currentUser={currentUser} /> 
             }} />
 
             <Route exact path="/gm/npc/:id" component={ NPC } />

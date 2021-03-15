@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Form } from 'react-bootstrap'
 import CharacterWindow from '../../Character/CharacterWindow'
 import OnlineUsers from './OnlineUsers'
@@ -64,7 +65,7 @@ const RightSidebar = (props) => {
                 <span onClick={()=>{changeIndex(2)}}>Users</span> - 
                 Ship - 
                 <span onClick={()=>{changeIndex(4)}}>Characters</span> - 
-                Close
+                <Link to={`/history/${props.gameState._id}`}>History</Link>
             </p>
         </>
     )

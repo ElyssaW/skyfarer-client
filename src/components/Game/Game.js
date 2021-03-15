@@ -255,6 +255,7 @@ const Game = (props) => {
                         updating={updating}
                         onlineUsers={onlineUsers}
                         playerCharacters={playerCharacters}
+                        gameState={gameState}
                     />
                 </Col>
             </Row>

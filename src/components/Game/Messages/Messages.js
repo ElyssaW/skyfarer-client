@@ -22,7 +22,6 @@ const Messages = (props) => {
     return (
         <div className='messages'>
             {messageList}
-
             < AlwaysScrollToBottom />
         </div>
     )
