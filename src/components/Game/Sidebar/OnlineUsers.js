@@ -12,7 +12,13 @@ const OnlineUsers = (props) => {
         console.log(props.playerCharacters[user.playingAs])
 
         if (props.playerCharacters[user.playingAs]) {
-            usersList.push(<p>{props.onlineUsers[userId].username} is online (Playing {props.playerCharacters[user.playingAs].name})</p>)
+            usersList.push(<p>{props.onlineUsers[userId].username} is online (Playing <span onClick={() => {
+                console.log('Setting sidebar...')
+                console.log(props.playerCharacters[user.playingAs])
+                props.setSidebarIndex(1)
+                props.setSidebarDisplay(props.playerCharacters[user.playingAs])
+                props.setUpdating('Updating...')
+            }}>{props.playerCharacters[user.playingAs].name})</span></p>)
         } else {
             usersList.push(<p>{props.onlineUsers[userId].username} is online</p>)
         }

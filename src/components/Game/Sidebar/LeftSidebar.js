@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Form } from 'react-bootstrap'
 import CharacterWindow from '../../Character/CharacterWindow'
 import OnlineUsers from './OnlineUsers'
 
-const Sidebar = (props) => {
+const LeftSidebar = (props) => {
 
     const handlePlayingAs = (e) => {
         console.log('Handling playing as')
@@ -22,15 +22,6 @@ const Sidebar = (props) => {
         props.pushUpdate('Updating...')
     }
 
-    let dropDownOptions = []
-    if (props.userCharacters) {
-        for (const char in props.userCharacters) {
-            dropDownOptions.push(
-                <option value={char}>{props.userCharacters[char].name}</option>
-            )
-        }
-    }
-
     const handleAddPeril = () => {
         console.log('Adding peril')
         let tempChar = props.playingAs
@@ -39,6 +30,15 @@ const Sidebar = (props) => {
         console.log(tempChar)
         props.updatePlayingAs(tempChar)
         props.pushUpdate('Updating...')
+    }
+    
+    let dropDownOptions = []
+    if (props.userCharacters) {
+        for (const char in props.userCharacters) {
+            dropDownOptions.push(
+                <option value={char}>{props.userCharacters[char].name}</option>
+            )
+        }
     }
 
     let spendTenacity = props.playingAs && props.playingAs.tenacity > 0 && props.playingAs.peril > 0 ?
@@ -50,20 +50,6 @@ const Sidebar = (props) => {
     let addPeril = <div>
     < button onClick={handleAddPeril} className='button' >Raise Peril</button>
 </div>
-
-    if (props.display === 0) {
-        return (
-        <div>
-            <p>Game</p>
-            <p>Ship</p>
-            <p>Online</p>
-            < OnlineUsers
-                onlineUsers={props.onlineUsers} 
-                playerCharacters={props.playerCharacters}
-            />
-        </div>
-        )
-    }
 
     return (
         <div>
@@ -85,4 +71,4 @@ const Sidebar = (props) => {
     )
 }
 
-export default Sidebar
+export default LeftSidebar

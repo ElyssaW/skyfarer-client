@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Form, Row, Col } from 'react-bootstrap'
 import MessageWindow from './Messages/MessageWindow'
-import Sidebar from './Sidebar/Sidebar'
+import LeftSidebar from './Sidebar/LeftSidebar'
+import RightSidebar from './Sidebar/RightSidebar'
 const REACT_APP_SERVER_URL = process.env.REACT_APP_SERVER_URL
 const io = require('socket.io-client')
 const axios = require('axios')
@@ -16,7 +17,8 @@ const Game = (props) => {
     const [onlineUsers, setOnlineUsers] = useState({})
     const [playingAs, setPlayingAs] = useState(null)
     const [updating, setUpdating] = useState('')
-    const [rightSidebar, setRightSidebar] = useState(0)
+    const [sidebarIndex, setSidebarIndex] = useState(0)
+    const [sidebarDisplay, setSidebarDisplay] = useState(null)
     const [messages, setMessages] = useState([])
 
     // -------- GAME STATE ----------------
@@ -217,29 +219,21 @@ const Game = (props) => {
         })
     }
 
-    const leftSidebarDisplay = 
-        < Col className='col-2 character-sidebar'>
-            < Sidebar 
-                playingAs={playingAs}
-                setNewPlayingAs={setNewPlayingAs}
-                updatePlayingAs={updatePlayingAs}
-                userCharacters={userCharacters}
-                pushUpdate={setUpdating}
-                updating={updating}
-            />
-        </Col>
-
-    let rightSidebarDisplay
-    switch (rightSidebar) {
-        case 0:
-
-    }
-
     let gameDisplay
     if (gameState && props.currentUser) {
         gameDisplay = (
             < Row className='game-window' >
-                {leftSidebarDisplay}
+                < Col className='col-3 character-sidebar'>
+                    < LeftSidebar 
+                        playingAs={playingAs}
+                        setNewPlayingAs={setNewPlayingAs}
+                        updatePlayingAs={updatePlayingAs}
+                        userCharacters={userCharacters}
+                        pushUpdate={setUpdating}
+                        updating={updating}
+                    />
+                </Col>
+
                 < Col className='message-div'>
                     < MessageWindow 
                         currentUser={props.currentUser} 
@@ -251,9 +245,9 @@ const Game = (props) => {
                         messages={messages}
                     />
                 </Col>
-                < Col className='col-2 character-sidebar'>
-                    < Sidebar 
-                        display={0}
+
+                < Col className='col-3 character-sidebar'>
+                    < RightSidebar 
                         playingAs={playingAs}
                         updatePlayingAs={updatePlayingAs}
                         userCharacters={userCharacters}
