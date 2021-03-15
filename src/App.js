@@ -69,15 +69,6 @@ function App() {
     }
   }, []);
 
-  // // Helper function to create a hash table of games data
-  // const createGameHash = (gamesData) => {
-  //   let gamesHash = {}
-  //   gamesData.forEach(game => {
-  //     gamesHash[game._id] = game
-  //   })
-  //   setGamesData(gamesHash)
-  // }
-
   // Helper function to update React's info on the user, in case a change occurs
   const nowCurrentUser = (userData) => {
     console.log('Current user...')

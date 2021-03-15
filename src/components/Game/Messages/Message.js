@@ -20,7 +20,11 @@ const Message = (props) => {
                 if (roll.stat == 'peril' || roll.stat == 'tenacity') {
                     return <span key={`roll-${props.index}-${i}`}> | {roll.stat}: {roll.roll}</span>
                 } else {
-                    return <span key={`roll-${props.index}-${i}`}> | {roll.stat}: {roll.roll + roll.bonus} (Rolled {roll.roll} + {roll.bonus})</span>
+                    if (roll.hasSecond) {
+                        return <span key={`roll-${props.index}-${i}`}> | {roll.stat}: {roll.roll + roll.bonus} (Rolled {roll.roll} and {roll.secondRoll} + {roll.bonus})</span>
+                    } else {
+                        return <span key={`roll-${props.index}-${i}`}> | {roll.stat}: {roll.roll + roll.bonus} (Rolled {roll.roll} + {roll.bonus})</span>
+                    }
                 }
             }
         }) : null

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Form, Row, Col } from 'react-bootstrap'
 import MessageWindow from './Messages/MessageWindow'
-import Sidebar from './Sidebar'
+import Sidebar from './Sidebar/Sidebar'
 const REACT_APP_SERVER_URL = process.env.REACT_APP_SERVER_URL
 const io = require('socket.io-client')
 const axios = require('axios')
@@ -13,6 +13,7 @@ const Game = (props) => {
     const [gameState, setGameState] = useState(null)
     const [playerCharacters, setPlayerCharacters] = useState({})
     const [userCharacters, setUserCharacters] = useState(null)
+    const [onlineUsers, setOnlineUsers] = useState({})
     const [playingAs, setPlayingAs] = useState(null)
     const [updating, setUpdating] = useState('')
     const [rightSidebar, setRightSidebar] = useState(0)
@@ -68,6 +69,20 @@ const Game = (props) => {
             extraHeaders: extraHeaders
         })
 
+        socketRef.current.on('userConnected', users => {
+            console.log('New user connected')
+            setOnlineUsers(users)
+        })
+
+        socketRef.current.on('userDisconnected', users => {
+            console.log('User disconnected')
+            setOnlineUsers(users)
+        })
+
+        socketRef.current.on('updateUsers', (newUsers) => {
+            setOnlineUsers(newUsers)
+        })
+
         socketRef.current.on('newChatMessage', (newMessage, updatedCharacter) => {
             if (updatedCharacter.userId === props.currentUser._id) {
                 updatePlayingAs(updatedCharacter)
@@ -113,6 +128,11 @@ const Game = (props) => {
         }
     }, [props.currentUser])
 
+    const setNewPlayingAs = (newPlayingAs) => {
+        socketRef.current.emit('setNewPlayingAs', newPlayingAs, props.currentUser)
+        setPlayingAs(newPlayingAs)
+    }
+
     const updatePlayingAs = (newPlayingAs) => {
         setPlayingAs(newPlayingAs)
 
@@ -152,19 +172,26 @@ const Game = (props) => {
         if (props.currentUser && playingAs) {
             let rollWords = [ 
                 '!veils', '!veil', '!irons', '!iron',  '!mirrors', 
-                '!mirror', '!hearts', '!heart', '!peril3', '!peril6', '!peril', '!tenacity1',
+                '!mirror', '!hearts', '!heart', 'x2', 
+                '!peril3', '!peril6', '!peril', '!tenacity1',
                 '!tenacity3', '!tenacity6', '!tenacity', '!gm', '!ooc'
             ].join('|')
     
             let rolls = messageBody.match(new RegExp(rollWords, 'gi'))
-            messageBody = messageBody.replace(new RegExp(rollWords, 'gi'), '').trim().replace(/ +/g, ' ')
+            let plusMatch = messageBody.match(new RegExp('\\+trait', 'gi'))
+            let plus = plusMatch ? plusMatch.length : 0
+            let minusMatch = messageBody.match(new RegExp('\\-trait', 'gi'))
+            let minus = minusMatch ? minusMatch.length : 0
+            messageBody = messageBody.replace(new RegExp(rollWords + '|\\-trait|\\+trait', 'gi'), '').trim().replace(/ +/g, ' ')
 
             let newMessage = {
                 body: messageBody,
                 username: props.currentUser && props.currentUser.name ? props.currentUser.name : 'Guest',
                 userId: props.currentUser ? props.currentUser._id : socketRef.current.id,
                 character: playingAs,
-                rolls: rolls
+                rolls: rolls,
+                plus: plus,
+                minus: minus
             }
 
             console.log(newMessage)
@@ -194,6 +221,7 @@ const Game = (props) => {
         < Col className='col-2 character-sidebar'>
             < Sidebar 
                 playingAs={playingAs}
+                setNewPlayingAs={setNewPlayingAs}
                 updatePlayingAs={updatePlayingAs}
                 userCharacters={userCharacters}
                 pushUpdate={setUpdating}
@@ -231,6 +259,8 @@ const Game = (props) => {
                         userCharacters={userCharacters}
                         pushUpdate={setUpdating}
                         updating={updating}
+                        onlineUsers={onlineUsers}
+                        playerCharacters={playerCharacters}
                     />
                 </Col>
             </Row>

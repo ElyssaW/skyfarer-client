@@ -1,6 +1,7 @@
 import React from 'react'
 import { Form } from 'react-bootstrap'
-import CharacterWindow from '../Character/CharacterWindow'
+import CharacterWindow from '../../Character/CharacterWindow'
+import OnlineUsers from './OnlineUsers'
 
 const Sidebar = (props) => {
 
@@ -8,7 +9,7 @@ const Sidebar = (props) => {
         console.log('Handling playing as')
         console.log(props.userCharacters)
         if (e.target.value) {
-            props.updatePlayingAs(props.userCharacters[e.target.value])
+            props.setNewPlayingAs(props.userCharacters[e.target.value])
         }
     }
 
@@ -56,6 +57,10 @@ const Sidebar = (props) => {
             <p>Game</p>
             <p>Ship</p>
             <p>Online</p>
+            < OnlineUsers
+                onlineUsers={props.onlineUsers} 
+                playerCharacters={props.playerCharacters}
+            />
         </div>
         )
     }
