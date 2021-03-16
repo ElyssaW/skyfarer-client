@@ -17,7 +17,7 @@ const Navbar = (props) => {
             props.currentUser ? 
             <div className='nav-link-bank flex'>
                 <NavLink className="nav-link" exact to="/auth/myprofile">{props.currentUser.name}</NavLink>
-                <NavLink className="nav-link" exact to="/" onClick={props.handleLogout}>Logout</NavLink>
+                <span className="nav-link" onClick={props.handleLogout}>Logout</span>
             </div> :
             <div className='nav-link-bank flex'>
                 <NavLink className="nav-link" exact to="/auth/login"> Login </NavLink>

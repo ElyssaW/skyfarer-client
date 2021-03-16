@@ -39,13 +39,13 @@ const RightSidebar = (props) => {
         case 2:
             sidebar = (
                 <>
-                    <p>Online</p>
                     < OnlineUsers
                         onlineUsers={props.onlineUsers} 
                         playerCharacters={props.playerCharacters}
                         setSidebarDisplay={setSidebarDisplay}
                         setSidebarIndex={setSidebarIndex}
                         setUpdating={setUpdating}
+                        gameState={props.gameState}
                     />
                 </>
                 )

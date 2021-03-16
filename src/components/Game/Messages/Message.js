@@ -3,16 +3,16 @@ import React from 'react'
 const Message = (props) => {
 
     let editDelete = props.currentUser && props.message.userId === props.currentUser._id ? (
-        <span>
-            <span onClick={() => {props.handleEdit(props.message, props.index)}}>Edit</span> - 
-            <span onClick={() => {props.handleDelete(props.message, props.index)}}> Delete</span> 
+        <span className='edit-delete'>
+            <span onClick={() => {props.handleEdit(props.message, props.index)}}> | edit</span> - 
+            <span onClick={() => {props.handleDelete(props.message, props.index)}}> delete</span> 
         </span> ) : null
 
     let ooc = props.message.ooc ?
-        <span>(Out of Character!)</span> : null
+        <span> (Out of Character!)</span> : null
 
     let gm = props.message.gmOnly ?
-        <span>(GM Only)</span> : null
+        <span>(GM Only) </span> : null
 
     let rolls = props.message.rolls ?
         props.message.rolls.map((roll, i) => {
@@ -30,13 +30,12 @@ const Message = (props) => {
         }) : null
 
     return (
-        <div>
-            
-            {ooc}{gm}
-            <h6><span dangerouslySetInnerHTML={{ __html: props.message.body }} />{rolls}</h6>
-            <p>{props.message.username} {editDelete}</p>
-
-        </div>
+        <>        
+            <div className='message-main'>
+                <p className='message-small'>{gm}{ooc}</p>
+                <h6 className='message-body'><span dangerouslySetInnerHTML={{ __html: props.message.body }} />{rolls} {editDelete}</h6>
+            </div>
+        </>
     )
 }
 

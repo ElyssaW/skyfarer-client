@@ -1,17 +1,33 @@
 import React, { useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import Message from './Message'
 
 const Messages = (props) => {
 
-    let messageList = props.messages ? props.messages.map((message, index) => {
+    let messageList = []
+    let messageBlock = []
+    
+    if(props.messages) {
+            props.messages.forEach((message, index) => {
+
             if (message.gmOnly && props.gameState && (props.currentUser._id === props.gameState.gm || message.userId === props.currentUser._id)) {
-                return (
+                messageBlock.push(
                 < Message message={message} currentUser={props.currentUser} handleEdit={props.handleEdit} handleDelete={props.handleDelete} index={index} key={`message-${index}`} />)
             } else if (!message.gmOnly) {
-                return < Message message={message} currentUser={props.currentUser} handleEdit={props.handleEdit} handleDelete={props.handleDelete} index={index} key={`message-${index}`} />
+                messageBlock.push(< Message message={message} currentUser={props.currentUser} handleEdit={props.handleEdit} handleDelete={props.handleDelete} index={index} key={`message-${index}`} />)
+            }
+
+            if (!props.messages[index+1] || props.messages[index+1].userId != message.userId) {
+                messageList.push(
+                    <div className='single-message-div'>
+                        <div><b>{message.username}</b></div>
+                        {messageBlock}
+                    </div>
+                )
+                messageBlock = []
             }
         })
-    : null
+    }
 
     const AlwaysScrollToBottom = () => {
         const elementRef = useRef()
@@ -21,6 +37,10 @@ const Messages = (props) => {
 
     return (
         <div className='messages'>
+            <div className='chat-history-div'>
+                <Link className='remove-dec' to={`/history/${props.gameState._id}`}>View Chat History</Link>
+            </div>
+
             {messageList}
             < AlwaysScrollToBottom />
         </div>
