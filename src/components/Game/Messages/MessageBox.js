@@ -5,17 +5,17 @@ const MessageBox = (props) => {
 
     return (
         <div>
-            < Form >
+            < Form className='message-form' >
                 { !props.editMessage ? (
                     <>
-                    < Form.Control type='text' className='send-box' onChange={(e) => {props.handleChange(e)}} value={props.newMessage} />
+                    < Form.Control type='textarea' className='send-box' onChange={(e) => {props.handleChange(e)}} value={props.newMessage} />
                     < button className='button send-button' onClick={(e) => {props.handleSubmit(e)}}>
                         Send
                     </button>
                     </>
                 ) : (
                     <>
-                    < Form.Control type='text' onChange={(e) => {props.handleChange(e)}} value={props.newMessage} />
+                    < Form.Control type='textarea' onChange={(e) => {props.handleChange(e)}} value={props.newMessage} />
                     < button className='button' onClick={(e) => {props.handleSubmitEdit(e)}}>
                         Save Edits
                     </button>

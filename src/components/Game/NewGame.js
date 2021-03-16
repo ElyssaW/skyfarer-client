@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Redirect } from 'react-router-dom'
-import { Form, Col } from 'react-bootstrap'
+import { Form, Col, Container } from 'react-bootstrap'
 const axios = require('axios')
 const REACT_APP_SERVER_URL = process.env.REACT_APP_SERVER_URL
 
@@ -28,18 +28,20 @@ const NewGame = (props) => {
         })
         .then(res => {
             console.log(res)
-            props.createGamesHash(res.data.gamesData)
+            let tempUser = props.currentUser
+            tempUser.games.push(res.data.newGame)
+            props.setCurrentUser(tempUser)
             setCreatedGame(res.data.newGame)
         })
     }
 
     if (createdGame) {
         console.log(createdGame)
-        return <Redirect to={`/game/${createdGame._id}`} />
+        return <Redirect to={`/auth/myprofile`} />
     }
 
     return (
-        <div >
+        <Container >
             < Form >
                 < Form.Label >Game Title</Form.Label>
                 < Form.Control onChange={(e) => {setGameTitle(e.target.value)}} ></Form.Control>
@@ -53,9 +55,9 @@ const NewGame = (props) => {
                 < Form.Label >Add users (Enter by email)</Form.Label>
                 < Form.Control onChange={(e) => {setUsers(e.target.value)}} ></Form.Control>
 
-                < input type='submit' onClick={(e) => handleSubmit(e)} />
+                < input className='button' type='submit' onClick={(e) => handleSubmit(e)} />
             </Form>
-        </div>
+        </Container>
     )
 }
 

@@ -10,7 +10,7 @@ const GameInfo = (props) => {
 
             <div>
                 <h4 className='subtitle sidebar-subtitle-left clipped-left'>Invite</h4>
-                <p className='sidebar-subsection-left'>Invite new friends with this link: <div className='invite-link'>{`${REACT_APP_CLIENT_URL}game/${props.gameState._id}`}</div></p>
+                <p className='sidebar-subsection-left'>Invite new friends with this link: <div className='invite-link'>{`${REACT_APP_CLIENT_URL}game/invite/${props.gameState._id}`}</div></p>
             </div>
 
             <h4 className='subtitle sidebar-subtitle-left clipped-left'>Tags</h4>

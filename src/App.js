@@ -25,6 +25,7 @@ import EditCharacter from './components/Character/EditCharacter'
 import Game from './components/Game/Game'
 import Games from './components/Games/Games'
 import NewGame from './components/Game/NewGame'
+import InviteLink from './components/Game/InviteLink'
 
 // Misc components
 import NPC from './components/GM/NPC'
@@ -52,7 +53,7 @@ function App() {
       axios(`${REACT_APP_SERVER_URL}auth/data/guest`)
       .then(res => {
         console.log(res)
-        //createGameHash(res.data)
+        createGameHash(res.data)
       })
     } else {
 
@@ -65,11 +66,19 @@ function App() {
       setIsAuthenticated(true);
 
       axios(`${REACT_APP_SERVER_URL}auth/data/${token._id}`).then(res => {
-        // createGameHash(res.data.gamesData)
+        createGameHash(res.data.gamesData)
         setCurrentUser(res.data.currentUser)
       })
     }
   }, []);
+
+  const createGameHash = (games) => {
+    let gameHash = {}
+    games.forEach(game => {
+      gameHash[game._id] = game
+    })
+    setGamesData(gameHash)
+  }
 
   // Helper function to update React's info on the user, in case a change occurs
   const nowCurrentUser = (userData) => {
@@ -81,11 +90,9 @@ function App() {
 
   // Logs the user out
   const handleLogout = () => {
-    if (localStorage.getItem('jwtToken')) {
-      localStorage.removeItem('jwtToken');
-      setCurrentUser(null);
-      setIsAuthenticated(false);
-    }
+    localStorage.removeItem('jwtToken');
+    setCurrentUser(null);
+    setIsAuthenticated(false);
   }
 
   return (
@@ -134,11 +141,14 @@ function App() {
 
             {/* New game, view game, view game history */}
             <Route exact path="/game/new" render={() => {
-              return < NewGame currentUser={currentUser}  /> }} />
-            <Route path="/game/:id" render={(props) => {
+              return < NewGame currentUser={currentUser} setCurrentUser={setCurrentUser} /> }} />
+            <Route path="/game/view/:id" render={(props) => {
               return < Game currentUser={currentUser} gameId={props.match.params.id} gamesData={gamesData} /> 
             }} />
-            <Route path="/history/:id" render={(props) => {
+            <Route path="/game/invite/:id" render={(props) => {
+              return < InviteLink currentUser={currentUser} gameId={props.match.params.id} gamesData={gamesData} /> 
+            }} />
+            <Route path="/game/history/:id" render={(props) => {
                 return < MessageBacklog gameId={props.match.params.id} currentUser={currentUser} /> 
             }} />
 

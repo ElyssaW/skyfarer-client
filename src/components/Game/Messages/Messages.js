@@ -17,10 +17,17 @@ const Messages = (props) => {
                 messageBlock.push(< Message message={message} currentUser={props.currentUser} handleEdit={props.handleEdit} handleDelete={props.handleDelete} index={index} key={`message-${index}`} />)
             }
 
-            if (!props.messages[index+1] || props.messages[index+1].userId != message.userId) {
+            if (!props.messages[index+1] || props.messages[index+1].userId != message.userId || props.messages[index+1].characterName != message.characterName) {
                 messageList.push(
                     <div className='single-message-div'>
-                        <div><b>{message.username}</b></div>
+                        <div><b>{ 
+                            message.characterName ? 
+                            (<>
+                            {message.characterName} ({message.username})
+                            </>) : (<>
+                            {message.username}
+                            </>) }
+                        </b></div>
                         {messageBlock}
                     </div>
                 )
@@ -37,10 +44,6 @@ const Messages = (props) => {
 
     return (
         <div className='messages'>
-            <div className='chat-history-div'>
-                <Link className='remove-dec' to={`/history/${props.gameState._id}`}>View Chat History</Link>
-            </div>
-
             {messageList}
             < AlwaysScrollToBottom />
         </div>

@@ -86,7 +86,7 @@ const Game = (props) => {
         })
 
         socketRef.current.on('newChatMessage', (newMessage, updatedCharacter) => {
-            if (updatedCharacter.userId === props.currentUser._id) {
+            if (updatedCharacter && updatedCharacter.userId === props.currentUser._id) {
                 updatePlayingAs(updatedCharacter)
             }
 
@@ -94,8 +94,6 @@ const Game = (props) => {
                 let newMessages = messages
                 newMessages.push(newMessage)
                 newMessages = newMessages.slice(newMessages.length-29)
-
-                console.log(newMessages)
                 setMessages((messages) => [...newMessages])
             } else {
                 setMessages((messages) => [...messages, newMessage])
@@ -103,6 +101,7 @@ const Game = (props) => {
         })
 
         socketRef.current.on('updateMessages', (newMessages) => {
+            console.log(newMessages)
             setMessages([...newMessages])
         })
 
@@ -171,7 +170,7 @@ const Game = (props) => {
     const sendMessage = (messageBody) => {
         console.log('Sending message...')
         console.log(props.currentUser, playingAs)
-        if (props.currentUser && playingAs) {
+        if (props.currentUser) {
             let rollWords = [ 
                 '!veils', '!veil', '!irons', '!iron',  '!mirrors', 
                 '!mirror', '!hearts', '!heart', 'x2', 

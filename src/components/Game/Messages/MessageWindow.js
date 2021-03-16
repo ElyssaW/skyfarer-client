@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import { Form, Row, Col } from 'react-bootstrap'
 import Messages from './Messages'
 import MessageBox from './MessageBox'
@@ -77,6 +78,10 @@ const MessageWindow = (props) => {
         < div className='flex' >
             
             < Col className='message-window' >
+                <div className='chat-history-div'>
+                    <Link className='remove-dec' to={`/history/game/${props.gameState._id}`}>View Chat History</Link>
+                </div>
+
                 < Messages 
                     messages={props.messages} 
                     currentUser={props.currentUser} 
