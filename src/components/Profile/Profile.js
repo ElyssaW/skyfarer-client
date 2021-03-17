@@ -1,10 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import {Container, Row, Col} from 'react-bootstrap'
+import CharacterCard from './CharacterCard'
+import GameCard from './GameCard'
 import { Link } from 'react-router-dom'
 
 const Profile = (props) => {
 
     let userData = <p>Loading...</p>
+
+    let charactersList = props.currentUser.characters ? props.currentUser.characters.map((character, i) => {
+        return < CharacterCard character={character} />
+    }) : null
+
+    let gameList = props.currentUser.games ? props.currentUser.games.map((game, i) => {
+        return ( 
+            <>
+                < GameCard game={game} />
+            </>
+        )
+    }) : null
     
     if (props.currentUser) {
         userData = 
@@ -14,17 +28,15 @@ const Profile = (props) => {
             < Row >
                 < Col >
                     <h2>Characters</h2>
-                    {props.currentUser.characters ? props.currentUser.characters.map((character, i) => {
-                        return <p key={`character-${i}`}>{character.name} < Link to={`/character/view/${character._id}`} key={`character-link-${i}`} ><button className='button'>View character</button></Link></p>
-                    }) : null}
+
+                    {charactersList}
 
                     <Link to='/character/new'><button className='button'>Make new character</button></Link>
                 </Col>
                 < Col >
                     <h2>Games</h2>
-                    {props.currentUser.games ? props.currentUser.games.map((game, i) => {
-                        return <p key={`game-${i}`}>{game.title}< Link to={`/game/view/${game._id}`} key={`game-link-${i}`} ><button className='button'>Go to Game</button></Link></p>
-                    }) : null }
+                    
+                    {gameList}
 
                     <Link to='/game/new'><button className='button'>Make new game</button></Link>
                 </Col>

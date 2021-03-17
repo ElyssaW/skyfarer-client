@@ -1,5 +1,6 @@
 import React from 'react'
-import GameCard from './GameCard'
+import { Container } from 'react-bootstrap'
+import GameCard from '../Profile/GameCard'
 
 const Games = (props) => {
 
@@ -12,10 +13,10 @@ const Games = (props) => {
     }
 
     return (
-        <div >
+        <Container >
             Find a game
             {games}
-        </div>
+        </Container>
     )
 }
 

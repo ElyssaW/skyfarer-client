@@ -14,7 +14,7 @@ import NotFound from './components/Base/NotFound'
 // User components
 import Login from './components/Auth/Login'
 import Signup from './components/Auth/Signup'
-import Profile from './components/Auth/Profile'
+import Profile from './components/Profile/Profile'
 
 // Character components
 import Character from './components/Character/Character'

@@ -1,5 +1,6 @@
 import React, { useState,useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { Container } from 'react-bootstrap'
 import CharacterWindow from './CharacterWindow'
 import EditCharacter from './EditCharacter'
 const axios = require('axios')
@@ -45,16 +46,15 @@ const Character = (props) => {
     ) : character ? (
         <div>
             < CharacterWindow character={character} />
-            < Link to='/character/new' >New character</Link>
-            < button onClick={() => setEditing(true)} >Edit character</button>
-            < Link to='/auth/myprofile' >< button onClick={handleDelete} >Delete character</button></Link>
+            < button className='button' onClick={() => setEditing(true)} >Edit character</button>
+            < Link to='/auth/myprofile' >< button className='button' onClick={handleDelete} >Delete character</button></Link>
         </div>
     ) : null
 
     return (
-        <>
+        < Container >
             {characterDisplay}
-        </>
+        </ Container >
     ) 
 }
 

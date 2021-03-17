@@ -38,21 +38,21 @@ const Login = (props) => {
     let errorMsg = error ? <p>Error logging in</p> : null
 
     return (
-        <div className='container'>
-        <div className='form-div login-div'>
-            <h1 className='title ribbon drop-shadow'><p className='ribbon-border'>Login</p></h1>
-            {errorMsg}
-            < Form className='form login-form'>
-                <label>Email</label>
-                < Form.Control type='emailnpm start
-                ' onChange={(e)=>{setEmail(e.target.value)}} />
+        <div className='container login-page'>
+            <div className='form-div login-div'>
+                <h1 className='title ribbon drop-shadow'><p className='ribbon-border'>Login</p></h1>
+                {errorMsg}
+                < Form className='form login-form'>
+                    <label>Email</label>
+                    < Form.Control type='emailnpm start
+                    ' onChange={(e)=>{setEmail(e.target.value)}} />
 
-                <label>Password</label>
-                < Form.Control type='password' onChange={(e)=>{setPassword(e.target.value)}} />
+                    <label>Password</label>
+                    < Form.Control type='password' onChange={(e)=>{setPassword(e.target.value)}} />
 
-                < input type='submit' className='button drop-shadow long-button' onClick={(e)=>{handleSubmit(e)}} />
-            </ Form >
-        </div>
+                    < input type='submit' className='button drop-shadow long-button' onClick={(e)=>{handleSubmit(e)}} />
+                </ Form >
+            </div>
         </div>
     )
 }

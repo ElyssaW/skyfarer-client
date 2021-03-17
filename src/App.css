@@ -347,6 +347,11 @@ body {
   width: 101%;
 }
 
+.login-page {
+  display: flex;
+  justify-content: center;
+}
+
 .login-form {
   width: 80%;
   position: relative;
@@ -354,6 +359,10 @@ body {
 }
 
 /* ----------- PROFILE --------------- */
+
+.card-container {
+  margin: 20px
+}
 
 .game-div {
   display: flex;
