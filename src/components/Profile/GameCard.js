@@ -17,12 +17,7 @@ const GameCard = (props) => {
                 {tagList}</p>
             </div>
 
-            <h6 className='subtitle sidebar-subtitle clipped'>Description</h6>
-            <div className='sidebar-subsection'>
-                {props.game.desc}
-
-                < Link to={`/game/view/${props.game._id}`} ><button className='button'>Go to Game</button></Link>
-            </div>
+            < Link to={`/game/view/${props.game._id}`} ><button className='button'>Go to Game</button></Link>
         </div>
     )
 }

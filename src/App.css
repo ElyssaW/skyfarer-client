@@ -361,7 +361,7 @@ body {
 /* ----------- PROFILE --------------- */
 
 .card-container {
-  margin: 20px
+  margin: 20px 0;
 }
 
 .game-div {
