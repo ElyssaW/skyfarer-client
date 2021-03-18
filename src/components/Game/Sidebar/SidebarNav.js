@@ -16,7 +16,6 @@ const SidebarNav = (props) => {
             <span onClick={()=>{props.setCollapsed(false)
                                 props.changeIndex(3)}}> Ship</span>  
 
-            <Link className='remove-dec' to={`/game/history/${props.gameId}`}> History</Link>
             <span onClick={()=>{props.setCollapsed(!props.collapsed)}}> 
                 { props.collapsed ? 'Open' : 'Close' }
             </span>

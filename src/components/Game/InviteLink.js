@@ -36,10 +36,19 @@ const InviteLink = (props) => {
 
     return (
         < Container >
-            <h1>You've been invited!</h1>
-            <p>{props.gamesData ? props.gamesData[props.gameId].title : null }</p>
-            <button className='button' onClick={() => {addUserToGame(props.currentUser)}}>Take Me There!</button>
-            <Link to='/'><button className='button'>No Thanks</button></Link>
+        <div className='drop-shadow invite-div'>
+            <h1 className='ribbon'>You've been invited!</h1>
+
+                <div className='invite-body'>
+                <h2>{props.gamesData ? props.gamesData[props.gameId].title : null }</h2>
+                <h4>{props.gamesData ? props.gamesData[props.gameId].desc : null }</h4>
+
+                <div>
+                <button className='button' onClick={() => {addUserToGame(props.currentUser)}}>Take Me There!</button>
+                <Link to='/'><button className='button'>No Thanks</button></Link>
+                </div>
+                </div>
+        </div>
         </ Container >
     )
 }

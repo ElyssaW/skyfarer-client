@@ -22,11 +22,11 @@ const CharacterWindow = (props) => {
                 <div className='stat-bank'>
                     <span>Irons: {props.character.irons}</span> 
                     <span>Hearts: {props.character.hearts}</span>
-                    <span>Mirros: {props.character.mirrors}</span>
+                    <span>Mirrors: {props.character.mirrors}</span>
                     <span>Veils: {props.character.veils}</span>
                 </div>
 
-                <div className='stat-bank'>
+                <div className='stat-bank flex'>
                     <span>Peril: <span className='red'>{props.character.peril}</span></span> 
 
                     <div className='stat-buttons'>

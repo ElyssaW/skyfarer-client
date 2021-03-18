@@ -29,7 +29,7 @@ A play-by-post app where the user can create new characters and games, and play 
 ## Stretch
 
 - [ ] Users can see a list of games, and send a request to join to the GM via private message
-- [ ] Chat has an "online users" list and a "user is typing" functionality
+- [x] Chat has an "online users" list functionality
 - [x] Chat has support for italics/bold/description
 
 ## Super Stretch

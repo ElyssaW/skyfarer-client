@@ -117,7 +117,7 @@ function App() {
               return < Login nowCurrentUser={nowCurrentUser} currentUser={currentUser} /> 
             }} />
             <Route exact path="/auth/myprofile" render={(props) => {
-              return < Profile currentUser={currentUser} /> 
+              return < Profile currentUser={currentUser} gamesData={gamesData} /> 
             }} />
 
             {/* Character view, new character, edit character */}

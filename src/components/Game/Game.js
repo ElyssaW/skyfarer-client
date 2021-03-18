@@ -17,8 +17,6 @@ const Game = (props) => {
     const [onlineUsers, setOnlineUsers] = useState({})
     const [playingAs, setPlayingAs] = useState(null)
     const [updating, setUpdating] = useState('')
-    const [sidebarIndex, setSidebarIndex] = useState(0)
-    const [sidebarDisplay, setSidebarDisplay] = useState(null)
     const [messages, setMessages] = useState([])
 
     // -------- GAME STATE ----------------
@@ -101,8 +99,10 @@ const Game = (props) => {
         })
 
         socketRef.current.on('updateMessages', (newMessages) => {
+            console.log('Message update')
             console.log(newMessages)
             setMessages([...newMessages])
+            pushUpdate()
         })
 
         socketRef.current.on('updateSingleCharacter', (updatedCharacter) => {
@@ -158,11 +158,13 @@ const Game = (props) => {
         let tempPlayerCharacters = playerCharacters
         delete tempPlayerCharacters[playingAs._id]
         updatePlayerCharacters(tempPlayerCharacters)
+        pushUpdate()
     }
 
     const updateGameState = (newGameState) => {
         console.log('Updating game state')
         setGameState(newGameState)
+        pushUpdate()
     }
 
     // ------------ SOCKET MESSAGES ---------------
@@ -199,6 +201,13 @@ const Game = (props) => {
     
             socketRef.current.emit('newChatMessage', newMessage)
         }
+    }
+
+    const pushUpdate = () => {
+        setUpdating('Updating...')
+        const updateTimeout = setTimeout(() => {
+            setUpdating('')
+        }, 1000)
     }
 
     // ------------ DELETE GAME --------------------
@@ -242,6 +251,7 @@ const Game = (props) => {
                         updateGameState={updateGameState}
                         sendMessage={sendMessage}
                         messages={messages}
+                        pushUpdate={pushUpdate}
                     />
                 </Col>
 
@@ -262,9 +272,13 @@ const Game = (props) => {
     }
 
     return (
+        <>
         < div className='game-div' >
             {gameDisplay}
         </ div >
+        
+        {updating}
+        </>
     )
 }
 

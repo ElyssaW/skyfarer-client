@@ -23,7 +23,7 @@ const Home = () => {
                 < Link to='/auth/login' className='home-link' >Log in</Link>
                 </p>
                 <p>
-                < Link to='/game/new' className='home-link' >Join a game</Link>
+                < Link to='/games/all' className='home-link' >Join a game</Link>
                 </p>
                 < Link to='/game/new' className='home-link' >Start a game</Link>
             </div>

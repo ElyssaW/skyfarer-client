@@ -32,7 +32,7 @@ const ChatCommands = (props) => {
 
             <div className='sidebar-chat-help'>
                 <p className='chat-help'>Style text with </p>
-                <p className='muted chat-example flex-fill'>
+                <p className='muted flex chat-example flex-fill'>
                     <b>&lt;b&gt;bold&lt;/b&gt;</b> 
                     <i>&lt;i&gt;italic&lt;/i&gt;</i> 
                     <span>&lt;s&gt;<s>lined</s>&lt;/s&gt;</span>
