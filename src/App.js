@@ -33,6 +33,7 @@ import Ship from './components/GM/Ship'
 import MessageBacklog from './components/Game/Messages/MessageBacklog';
 
 const REACT_APP_SERVER_URL = process.env.REACT_APP_SERVER_URL
+const REACT_APP_CLIENT_URL=process.env.REACT_APP_CLIENT_URL
 const axios = require('axios')
 
 function App() {
@@ -84,8 +85,8 @@ function App() {
   const nowCurrentUser = (userData) => {
     console.log('Current user...')
     console.log(userData)
-    setCurrentUser(userData);
     setIsAuthenticated(true);
+    setCurrentUser(userData);
   }
 
   // Logs the user out
@@ -93,6 +94,7 @@ function App() {
     localStorage.removeItem('jwtToken');
     setCurrentUser(null);
     setIsAuthenticated(false);
+    window.location = `${REACT_APP_CLIENT_URL}auth/login`
   }
 
   return (
@@ -117,39 +119,63 @@ function App() {
               return < Login nowCurrentUser={nowCurrentUser} currentUser={currentUser} /> 
             }} />
             <Route exact path="/auth/myprofile" render={(props) => {
-              return < Profile currentUser={currentUser} gamesData={gamesData} /> 
+              if (currentUser) { return < Profile currentUser={currentUser} gamesData={gamesData} />} else {
+                return < Redirect to='/auth/login' /> 
+              }
             }} />
 
             {/* Character view, new character, edit character */}
             <Route path="/character/view/:id" render={(props) => {
-              return < Character characterId={props.match.params.id} /> 
-            }} />
-            <Route exact path="/character/new" render={() => {
-              return < WriteCharacter currentUser={currentUser} nowCurrentUser={nowCurrentUser} />
+              if (currentUser) { return < Character characterId={props.match.params.id} />} else {
+                return < Redirect to='/auth/login' /> 
+              }
+            }}/> 
+            <Route exact path="/character/new" render={(props) => {
+              if (currentUser) { return < WriteCharacter currentUser={currentUser} nowCurrentUser={nowCurrentUser} />} else {
+                return < Redirect to='/auth/login' /> 
+              }
             }} />
             <Route exact path="/character/edit/:id" render={(props) => {
-              return < EditCharacter currentUser={currentUser} characterId={props.match.params.id} />
+              if (currentUser) { 
+                let character = currentUser.characters.filter(character => character._id === props.match.params.id)
+                console.log('Character')
+                return < EditCharacter currentUser={currentUser} character={character[0]} />} else {
+                return < Redirect to='/auth/login' /> 
+              }
             }} />
 
             {/* All games, search all games */}
             <Route exact path="/games/all" render={(props) => {
-              return < Games gamesData={gamesData} /> 
+              if (currentUser) { return < Games gamesData={gamesData} />} else {
+                return < Redirect to='/auth/login' /> 
+              } 
             }} />
             <Route exact path="/games/all/:search" render={(props) => {
-              return < Games gamesData={gamesData} search={props.match.params.search} /> 
+              if (currentUser) { return < Games gamesData={gamesData} search={props.match.params.search} />} else {
+                return < Redirect to='/auth/login' /> 
+              } 
             }} />
 
             {/* New game, view game, view game history */}
-            <Route exact path="/game/new" render={() => {
-              return < NewGame currentUser={currentUser} setCurrentUser={setCurrentUser} /> }} />
+            <Route exact path="/game/new" render={(props) => {
+              if (currentUser) { return < NewGame currentUser={currentUser} setCurrentUser={setCurrentUser} />} else {
+                return < Redirect to='/auth/login' /> 
+              }
+            }} />
             <Route path="/game/view/:id" render={(props) => {
-              return < Game currentUser={currentUser} gameId={props.match.params.id} gamesData={gamesData} /> 
+              if (currentUser) { return < Game currentUser={currentUser} gameId={props.match.params.id} gamesData={gamesData} />} else {
+                return < Redirect to='/auth/login' /> 
+              } 
             }} />
             <Route path="/game/invite/:id" render={(props) => {
-              return < InviteLink currentUser={currentUser} gameId={props.match.params.id} gamesData={gamesData} /> 
+              if (currentUser) { return < InviteLink currentUser={currentUser} gameId={props.match.params.id} gamesData={gamesData} />} else {
+                return < Redirect to='/auth/login' /> 
+              }
             }} />
             <Route path="/game/history/:id" render={(props) => {
-                return < MessageBacklog gameId={props.match.params.id} currentUser={currentUser} /> 
+              if (currentUser) { return < MessageBacklog gameId={props.match.params.id} currentUser={currentUser} />} else {
+                return < Redirect to='/auth/login' /> 
+              }
             }} />
 
             <Route exact path="/gm/npc/:id" component={ NPC } />

@@ -62,8 +62,7 @@ const EditCharacter = (props) => {
         .then(res => {
             console.log('New character created')
             console.log(res)
-            props.nowCurrentUser(res.data.updatedUser)
-            setEditChar(res.data.editCharacter)
+            setEditChar(true)
         }).catch(res => {
             console.log(res)
             setError(true)
@@ -72,7 +71,7 @@ const EditCharacter = (props) => {
 
     let errorMsg = error ? <p>Error creating character</p> : null
 
-    if (editChar) return <Redirect to={`/character/view/${editChar._id}`} />
+    if (editChar) return <Redirect to={`/auth/myprofile`} />
     
     return (
         < Container >

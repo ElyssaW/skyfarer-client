@@ -17,7 +17,7 @@ const CharacterCard = (props) => {
                     <p className='character-window-subtitle'>A {props.character.traits[0].desc}, {props.character.traits[1].desc} {props.character.profession}</p>
 
                     < Link to={`/character/view/${props.character._id}`} ><button className='button'>View Character</button></Link>
-                    < Link to={`/game/edit/${props.character._id}`} ><button className='button'>Edit Character</button></Link>
+                    < Link to={`/character/edit/${props.character._id}`} ><button className='button'>Edit Character</button></Link>
                 </div>
         </div>
     )
